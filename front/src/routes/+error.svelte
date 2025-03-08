@@ -56,7 +56,7 @@
 	</div>
 </main>
 
-<style lang="postcss">
+<style>
 	.title {
 		-webkit-text-stroke: 2px oklch(var(--nc));
 	}

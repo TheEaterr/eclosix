@@ -6,6 +6,7 @@
 	import { navigating } from '$app/state';
 	import { writable } from 'svelte/store';
 	import { setContext } from 'svelte';
+	import DecoratedBackground from '../decorations/DecoratedBackground.svelte';
 
 	let { children } = $props();
 
@@ -22,6 +23,8 @@
 	setContext('gameWon', gameWon);
 </script>
 
+<DecoratedBackground />
+
 <QueryClientProvider client={queryClient}>
 	{#if navigating.to}
 		<div class="flex h-screen w-screen items-center justify-center">
@@ -37,7 +40,7 @@
 	{/if}
 </QueryClientProvider>
 
-<style lang="postcss">
+<style>
 	@keyframes fade-in {
 		0% {
 			opacity: 0;
