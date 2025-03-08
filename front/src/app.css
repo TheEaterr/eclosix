@@ -1,8 +1,44 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
-@plugin "daisyui" {
-    themes: light --default, dark --prefersdark
+@plugin "daisyui";
+@plugin "daisyui/theme" {
+    name: "light";
+    default: true; /* set as default */
+  
+    --color-base-100: #ffffff;
+    --color-primary: #115e59;
+    --color-primary-content: #d0dddb;
+    --color-secondary: #4f46e5;
+    --color-secondary-content: #e5dcff;
+    --color-accent: #ac2c00;
+    --color-accent-content: #f7e1d9;
+    --color-neutral: #4b5563;
+    --color-neutral-content: #bbbbcc;
+    --color-info: #7cb3ff;
+    --color-success: #84cc16;
+    --color-success-content: #114040;
+    --color-warning: #facc15;
+    --color-error: #ef4444;
+}
+@plugin "daisyui/theme" {
+    name: "dark";
+    default: false; /* set as default */
+  
+    --color-base-100: #374151;
+    --color-primary: #d0dddb;
+    --color-primary-content: #115e59;
+    --color-secondary: #e5dcff;
+    --color-secondary-content: #4f46e5;
+    --color-accent: #f7e1d9;
+    --color-accent-content: #ac2c00;
+    --color-neutral: #bbbbcc;
+    --color-neutral-content: #5c6674;
+    --color-info: #3b82f6;
+    --color-success: #84cc16;
+    --color-success-content: #114040;
+    --color-warning: #facc15;
+    --color-error: #ef4444;
 }
 
 .btn {
@@ -26,7 +62,7 @@
 }
 
 .small-title {
-	-webkit-text-stroke: 1px oklch(var(--nc));
+	-webkit-text-stroke: 1px var(--color-neutral-content);
 }
 
 hr {

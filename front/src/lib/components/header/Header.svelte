@@ -34,7 +34,7 @@
 		</div>
 		<label class="swap swap-rotate">
 			<!-- this hidden checkbox controls the state -->
-			<input type="checkbox" data-toggle-theme="dark,light" data-act-class="ACTIVECLASS" />
+			<input type="checkbox" data-toggle-theme="dark,light" data-act-class="ACTIVECLASS" hidden />
 			<IconSun class="swap-on h-10 w-10" stroke={2} />
 			<IconMoon class="swap-off h-10 w-10" stroke={2} />
 		</label>
