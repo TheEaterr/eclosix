@@ -5,10 +5,10 @@
 </script>
 
 <svelte:head>
-	<title>Taxonomicle - Error {page.status}</title>
+	<title>Éclosix - Erreur {page.status}</title>
 	<meta
 		name="description"
-		content="Taxonomicle is game where you have to find a species in the tree of life and learn some taxonomy facts along the way. A new species is available each day but you can also play in endless mode and share the challenge with a friend!"
+		content="Éclosix est un jeu de lettre où le but est d'écrire 12 mots en n'utilisant que 7 lettres. Plus le mot est long, plus il rapporte de points !"
 	/>
 </svelte:head>
 
@@ -25,15 +25,14 @@
 						<IconExclamationCircle size={30} class="stroke-current" />
 						<span>
 							{#if page.status === 404}
-								This page doesn't seem to exist.
+								Cette page n'existe pas.
 							{:else if page.status === 500}
-								Something went wrong with Taxonomicle. Please try to reload the page. If the problem
-								persists, please make an issue on the
+								Un problème est survenu avec Éclosix. Si le problème persiste, signalez-le sur le
 								<a
-									href="https://github.com/TheEaterr/taxonomicle"
+									href="https://github.com/TheEaterr/eclosix"
 									target="_blank"
 									rel="noopener"
-									class="link">site's github<IconExternalLink class="inline" size={15} /></a
+									class="link">dépôt github<IconExternalLink class="inline" size={15} /></a
 								>.
 							{:else}
 								{page.error?.message}
@@ -44,11 +43,11 @@
 				<div>
 					{#if page.status !== 404}
 						<button onclick={() => location.reload()} class="btn-neutral-special btn btn-sm"
-							>Reload the page</button
+							>Recharger la page</button
 						>
 					{/if}
 					<button onclick={() => goto('/')} class="btn-neutral-special btn btn-sm ml-1"
-						>Go back home</button
+						>Retour à l'accueil</button
 					>
 				</div>
 			</div>

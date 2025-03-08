@@ -18,7 +18,66 @@ export const testWord = async (word: string) => {
 	return words.items.length > 0;
 };
 
-export const getDailyCandidate = async () => {
+export type Problem = {
+	id: string;
+	availableLetters: string[];
+	centerLetter: string;
+};
+
+export const getProblemFromId = async (id: string): Promise<Problem> => {
+	const letter = id[id.length - 1];
+	const candidateId = id.slice(0, -1);
+
+	const candidate = await pb
+		.collection('candidates')
+		.getOne<CandidatesResponse<string[], TexpandWord>>(candidateId, {
+			expand: 'word'
+		});
+
+	if (!candidate.available_letters) {
+		throw new Error('No available letters');
+	}
+
+	const word = candidate.expand?.word.word;
+	if (!word) {
+		throw new Error('No word found');
+	}
+
+	return {
+		id: candidate.id + letter,
+		availableLetters: candidate.available_letters,
+		centerLetter: letter
+	};
+};
+
+export const getRandomProblem = async (): Promise<Problem> => {
+	const candidate = await pb
+		.collection('candidates')
+		.getFirstListItem<CandidatesResponse<string[], TexpandWord>>('', {
+			sort: '@random',
+			expand: 'word'
+		});
+
+	if (!candidate.available_letters) {
+		throw new Error('No available letters');
+	}
+
+	const word = candidate.expand?.word.word;
+	if (!word) {
+		throw new Error('No word found');
+	}
+
+	const letter =
+		candidate.available_letters[Math.floor(Math.random() * candidate.available_letters.length)];
+
+	return {
+		id: candidate.id + letter,
+		availableLetters: candidate.available_letters,
+		centerLetter: letter
+	};
+};
+
+export const getDailyProblem = async (): Promise<Problem> => {
 	const oneDay = 24 * 60 * 60 * 1000;
 	const initialDate = new Date(2001, 12, 10);
 	const currentDate = new Date();
@@ -51,8 +110,9 @@ export const getDailyCandidate = async () => {
 	}
 
 	return {
-		word,
-		letter
+		id: candidate.id + letter,
+		availableLetters: candidate.available_letters,
+		centerLetter: letter
 	};
 };
 

@@ -1,9 +1,6 @@
 <script lang="ts">
 	import DecorationIcon from './DecorationIcon.svelte';
-	import {
-		DecorationPossibilities,
-		getRandomDecoration
-	} from './decorationPossibilities';
+	import { DecorationPossibilities, getRandomDecoration } from './decorationPossibilities';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 
@@ -20,42 +17,46 @@
 
 	let w: number = $state(0);
 	let h: number = $state(0);
-	let decorations: ({ x: number; y: number; icon: DecorationPossibilities }[] | undefined)[][] = $derived.by(() => {
-		const decorations: ({ x: number; y: number; icon: DecorationPossibilities }[] | undefined)[][] = [];
-		const pxPerCell = 150;
-		const numberColumns = Math.floor(w / pxPerCell);
-		const numberRows = Math.floor(h / pxPerCell);
-		for (let i = decorations.length; i < numberColumns; i++) {
-			decorations.push([]);
-		}
-		for (let i = 0; i < numberColumns; i++) {
-			for (let j = decorations[i].length; j < numberRows; j++) {
-				if (Math.random() < 0.4) {
-					decorations[i].push(undefined);
-					continue;
-				}
-				// we add an offset for 10 to place the center of the decoration
-				const centerOffset = 10;
-				const xOffset = Math.random() * 0.5;
-				const yOffset = Math.random() * 0.5;
-				const decorationsInCell = [
-					{
-						x: ((i + 0.25 + xOffset) / numberColumns) * w - centerOffset,
-						y: ((j + 0.25 + yOffset) / numberRows) * h - centerOffset,
-						icon: getRandomDecoration()
-					},
-					{
-						x: ((i + 0.75 - xOffset) / numberColumns) * w - centerOffset,
-						y: ((j + 0.75 - yOffset) / numberRows) * h - centerOffset,
-						icon: getRandomDecoration()
-					}
-				];
-				decorations[i].push(decorationsInCell);
+	let decorations: ({ x: number; y: number; icon: DecorationPossibilities }[] | undefined)[][] =
+		$derived.by(() => {
+			const decorations: (
+				| { x: number; y: number; icon: DecorationPossibilities }[]
+				| undefined
+			)[][] = [];
+			const pxPerCell = 150;
+			const numberColumns = Math.floor(w / pxPerCell);
+			const numberRows = Math.floor(h / pxPerCell);
+			for (let i = decorations.length; i < numberColumns; i++) {
+				decorations.push([]);
 			}
-			decorations[i] = decorations[i].slice(0, 2 * numberRows);
-		}
-		return decorations.slice(0, 2 * numberColumns);
-	});
+			for (let i = 0; i < numberColumns; i++) {
+				for (let j = decorations[i].length; j < numberRows; j++) {
+					if (Math.random() < 0.4) {
+						decorations[i].push(undefined);
+						continue;
+					}
+					// we add an offset for 10 to place the center of the decoration
+					const centerOffset = 10;
+					const xOffset = Math.random() * 0.5;
+					const yOffset = Math.random() * 0.5;
+					const decorationsInCell = [
+						{
+							x: ((i + 0.25 + xOffset) / numberColumns) * w - centerOffset,
+							y: ((j + 0.25 + yOffset) / numberRows) * h - centerOffset,
+							icon: getRandomDecoration()
+						},
+						{
+							x: ((i + 0.75 - xOffset) / numberColumns) * w - centerOffset,
+							y: ((j + 0.75 - yOffset) / numberRows) * h - centerOffset,
+							icon: getRandomDecoration()
+						}
+					];
+					decorations[i].push(decorationsInCell);
+				}
+				decorations[i] = decorations[i].slice(0, 2 * numberRows);
+			}
+			return decorations.slice(0, 2 * numberColumns);
+		});
 </script>
 
 <div bind:clientWidth={w} bind:clientHeight={h} class="fixed top-0 -z-10 h-screen w-screen">
@@ -66,7 +67,7 @@
 				<div
 					class="{$gameWon
 						? 'animate-appear-rgb'
-						: 'animate-appear'} absolute size-[20px] bg-cover text-neutral-content"
+						: 'animate-appear'} text-neutral-content absolute size-[20px] bg-cover"
 					style="left: {cell[0].x}px; top: {cell[0].y}px; animation-delay: {wrapValue(
 						cell[0].x + cell[0].y
 					)}ms; animation-duration: {$gameWon ? 2 : 5}s;"
@@ -76,7 +77,7 @@
 				<div
 					class="{$gameWon
 						? 'animate-appear-reverse-rgb'
-						: 'animate-appear-reverse'} absolute size-[20px] bg-cover text-neutral-content opacity-0"
+						: 'animate-appear-reverse'} text-neutral-content absolute size-[20px] bg-cover opacity-0"
 					style="left: {cell[1].x}px; top: {cell[1].y}px; animation-delay: {wrapValue(
 						cell[0].x + cell[0].y
 					)}ms; animation-duration: {$gameWon ? 2 : 5}s;"

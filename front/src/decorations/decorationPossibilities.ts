@@ -6,7 +6,7 @@ export enum DecorationPossibilities {
 	LETTER_CASE_TOGGLE,
 	BOOK,
 	PENCIL,
-	FILE,
+	FILE
 }
 
 // taken from
