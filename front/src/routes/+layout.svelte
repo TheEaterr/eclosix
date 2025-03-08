@@ -7,6 +7,8 @@
 	import { writable } from 'svelte/store';
 	import { setContext } from 'svelte';
 
+	let { children } = $props();
+
 	const queryClient = new QueryClient({
 		defaultOptions: {
 			queries: {
@@ -28,7 +30,7 @@
 			</span>
 		</div>
 	{:else}
-		<slot />
+		{@render children?.()}
 	{/if}
 	{#if import.meta.env.MODE === 'development'}
 		<SvelteQueryDevtools />

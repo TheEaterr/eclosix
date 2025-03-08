@@ -43,11 +43,11 @@
 				</div>
 				<div>
 					{#if page.status !== 404}
-						<button on:click={() => location.reload()} class="btn-neutral-special btn btn-sm"
+						<button onclick={() => location.reload()} class="btn-neutral-special btn btn-sm"
 							>Reload the page</button
 						>
 					{/if}
-					<button on:click={() => goto('/')} class="btn-neutral-special btn btn-sm ml-1"
+					<button onclick={() => goto('/')} class="btn-neutral-special btn btn-sm ml-1"
 						>Go back home</button
 					>
 				</div>

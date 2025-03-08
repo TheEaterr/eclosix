@@ -20,19 +20,19 @@
 			<div class="max-w-md">
 				<h1 class="title text-5xl font-bold text-primary sm:text-6xl lg:text-7xl">Eclosix</h1>
 				<div class="m-3 mt-5">
-					<button on:click={() => goto('/game/daily')} class="btn-primary-special main-btn btn"
+					<button onclick={() => goto('/game/daily')} class="btn-primary-special main-btn btn"
 						>Daily</button
 					>
 					<button
-						on:click={() => goto('/game/endless')}
+						onclick={() => goto('/game/endless')}
 						class="btn-secondary-special main-btn btn ml-5">Endless</button
 					>
 				</div>
 				<div>
-					<button on:click={() => goto('/game/tutorial')} class="btn-neutral-special btn btn-sm"
+					<button onclick={() => goto('/game/tutorial')} class="btn-neutral-special btn btn-sm"
 						>How to play</button
 					>
-					<button on:click={() => goto('/about')} class="btn-neutral-special btn btn-sm ml-1"
+					<button onclick={() => goto('/about')} class="btn-neutral-special btn btn-sm ml-1"
 						>About</button
 					>
 				</div>
