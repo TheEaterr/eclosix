@@ -77,6 +77,13 @@ export const getRandomProblem = async (): Promise<Problem> => {
 	};
 };
 
+const shuffleArray = (array: string[]) => {
+	for (let i = array.length - 1; i >= 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[array[i], array[j]] = [array[j], array[i]];
+	}
+};
+
 export const getDailyProblem = async (): Promise<Problem> => {
 	const oneDay = 24 * 60 * 60 * 1000;
 	const initialDate = new Date(2001, 12, 10);
@@ -108,10 +115,15 @@ export const getDailyProblem = async (): Promise<Problem> => {
 	if (!word) {
 		throw new Error('No word found');
 	}
+	// get the letters in the word
+	const letters = word.split('');
+	// drop duplicates
+	const uniqueLetters = [...new Set(letters)];
+	shuffleArray(uniqueLetters);
 
 	return {
 		id: candidate.id + letter,
-		availableLetters: candidate.available_letters,
+		availableLetters: uniqueLetters,
 		centerLetter: letter
 	};
 };

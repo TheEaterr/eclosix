@@ -1,0 +1,41 @@
+<script lang="ts">
+	let {
+		letter,
+		onClick,
+		isCenter,
+		bonusLetter
+	}: { letter: string; onClick: (letter: string) => void; isCenter: boolean; bonusLetter: string } =
+		$props();
+
+	const isBonus = letter === bonusLetter;
+	const color = isCenter ? '#ff0000' : isBonus ? '#ffff00' : '#000000';
+</script>
+
+<button class="link relative h-20 w-20" onclick={() => onClick(letter)}>
+	<div class="absolute top-0 left-0 z-10 flex h-full w-full items-center justify-center text-5xl">
+		{letter}
+	</div>
+	<div class="absolute top-0 left-0 h-full w-full">
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			height="100%"
+			width="100%"
+			viewBox="-15.51 -52.47 61.01 52.97"
+			vector-effect="non-scaling-stroke"
+		>
+			<path
+				fill="none"
+				stroke={color}
+				stroke-width="1"
+				stroke-linejoin="round"
+				stroke-linecap="round"
+				stroke-dasharray="none"
+				d="M 0,0 L 30,0 L 45,-25.98 L 30,-51.96 L 0,-51.96 L -15,-25.98 L 0,0 "
+			>
+			</path>
+		</svg>
+	</div>
+</button>
+
+<style>
+</style>

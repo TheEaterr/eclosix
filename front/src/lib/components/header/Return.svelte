@@ -18,8 +18,9 @@
 	};
 </script>
 
-<div class="tooltip tooltip-bottom" data-tip="Go back">
+<div class="tooltip tooltip-bottom" data-tip="Retour">
 	<button
+		class="link"
 		bind:this={button}
 		onclick={() => {
 			animate();

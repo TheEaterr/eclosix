@@ -13,8 +13,9 @@
 	};
 </script>
 
-<div class="tooltip tooltip-bottom" data-tip="Reset game">
+<div class="tooltip tooltip-bottom" data-tip="Réinitialiser">
 	<button
+		class="link"
 		bind:this={button}
 		onclick={() => {
 			animate();
