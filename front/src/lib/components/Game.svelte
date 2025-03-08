@@ -79,7 +79,7 @@
 			}
 			return [...words, currentWord];
 		});
-		points.update((points) => points + getNumberOfPoints(currentWord));
+		points.update((points) => points + getNumberOfPoints(currentWord.toLowerCase()));
 		currentWord = '';
 		setBonusLetter();
 	};
