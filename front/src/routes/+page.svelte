@@ -18,7 +18,7 @@
 		<div class="hero-overlay bg-base-100"></div>
 		<div class="hero-content p-10 text-center sm:p-14 lg:p-20">
 			<div class="max-w-md">
-				<h1 class="title text-5xl font-bold text-primary sm:text-6xl lg:text-7xl">Eclosix</h1>
+				<h1 class="title text-primary text-5xl font-bold sm:text-6xl lg:text-7xl">Eclosix</h1>
 				<div class="m-3 mt-5">
 					<button onclick={() => goto('/game/daily')} class="btn-primary-special main-btn btn"
 						>Daily</button

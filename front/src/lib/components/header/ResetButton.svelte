@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { IconRotate } from '@tabler/icons-svelte';
 
-	let { reset }: { reset: () => void } = $props();	
+	let { reset }: { reset: () => void } = $props();
 
 	let button: HTMLButtonElement;
 	const animate = () => {

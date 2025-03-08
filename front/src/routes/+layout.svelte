@@ -25,7 +25,7 @@
 <QueryClientProvider client={queryClient}>
 	{#if navigating.to}
 		<div class="flex h-screen w-screen items-center justify-center">
-			<span class="animate-suspense w-40 text-neutral opacity-0">
+			<span class="animate-suspense text-neutral w-40 opacity-0">
 				<span class="loading loading-dots text-neutral-content"></span>
 			</span>
 		</div>

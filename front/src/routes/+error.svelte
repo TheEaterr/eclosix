@@ -17,7 +17,7 @@
 		<div class="hero-overlay bg-base-100"></div>
 		<div class="hero-content p-10 text-center sm:p-14 lg:p-20">
 			<div class="max-w-md">
-				<h1 class="title text-5xl font-bold text-error sm:text-6xl lg:text-7xl">
+				<h1 class="title text-error text-5xl font-bold sm:text-6xl lg:text-7xl">
 					{page.status}
 				</h1>
 				<div class="m-4 text-center">
