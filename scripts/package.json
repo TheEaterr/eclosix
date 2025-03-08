@@ -1,0 +1,15 @@
+{
+  "name": "eclosix-upload",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "upload.js",
+  "scripts": {
+    "upload": "node upload.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "pocketbase": "^0.25.2"
+  }
+}
