@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { IconRotate } from '@tabler/icons-svelte';
 
-	export let reset: () => void;
+	let { reset }: { reset: () => void } = $props();	
 
 	let button: HTMLButtonElement;
 	const animate = () => {
@@ -16,7 +16,7 @@
 <div class="tooltip tooltip-bottom" data-tip="Reset game">
 	<button
 		bind:this={button}
-		on:click={() => {
+		onclick={() => {
 			animate();
 			reset();
 		}}

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getDailyCandidate } from '$lib/pocketBase';
 
-	export let goalCandidate: Awaited<ReturnType<typeof getDailyCandidate>>;
+	let { goalCandidate }: { goalCandidate: Awaited<ReturnType<typeof getDailyCandidate>> } = $props();
 </script>
 
 <main>

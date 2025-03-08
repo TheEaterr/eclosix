@@ -12,8 +12,7 @@
 		// 👆 false parameter is required for svelte
 	});
 
-	export let reset: (() => void) | undefined = undefined;
-	export let onlyTheme: boolean = false;
+	let { reset, onlyTheme }: { reset?: () => void, onlyTheme: boolean } = $props();	
 </script>
 
 {#if !onlyTheme}

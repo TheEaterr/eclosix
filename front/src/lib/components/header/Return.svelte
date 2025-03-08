@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { IconArrowLeft } from '@tabler/icons-svelte';
 
-	let button: HTMLButtonElement;
+	let button: HTMLButtonElement | null = $state(null);
 	const animate = () => {
-		button.animate(
+		button?.animate(
 			[
 				{ transform: 'translate(0px)' },
 				{ transform: 'translate(-5px)' },
@@ -21,7 +21,7 @@
 <div class="tooltip tooltip-bottom" data-tip="Go back">
 	<button
 		bind:this={button}
-		on:click={() => {
+		onclick={() => {
 			animate();
 			window.history.back();
 		}}

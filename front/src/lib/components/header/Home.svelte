@@ -2,9 +2,9 @@
 	import { goto } from '$app/navigation';
 	import { IconHome } from '@tabler/icons-svelte';
 
-	let button: HTMLButtonElement;
+	let button: HTMLButtonElement | null = $state(null);
 	const animate = () => {
-		button.animate(
+		button?.animate(
 			[{ transform: 'scale(1)' }, { transform: 'scale(1.2)' }, { transform: 'scale(1)' }],
 			{
 				duration: 500,
@@ -18,7 +18,7 @@
 <div class="tooltip tooltip-bottom" data-tip="Go to Home">
 	<button
 		bind:this={button}
-		on:click={() => {
+		onclick={() => {
 			animate();
 			goto('/');
 		}}
