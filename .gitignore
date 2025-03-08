@@ -6,3 +6,4 @@ deploy.sh
 main.exe
 .venv
 node_modules
+.env

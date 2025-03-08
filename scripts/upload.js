@@ -3,7 +3,7 @@ import PocketBase from "pocketbase";
 
 const pb = new PocketBase("http://127.0.0.1:8090");
 
-await pb.collection('_superusers').authWithPassword("tykapl.breuil@gmail.com", "@9ibn6hXkXV%k^")
+await pb.collection('_superusers').authWithPassword(process.env.PB_ADMIN_USER, process.env.PB_ADMIN_PASSWORD)
 
 // Function to read JSON file synchronously
 export function readJSONFile(filename) {
