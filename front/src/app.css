@@ -22,9 +22,9 @@
 	--color-error: #ef3333;
 	--color-error-content: #ffbbbb;
 
-	--color-gold: #D4AF37;
-	--color-silver: #C0C0C0;
-	--color-bronze: #CD7F32;
+	--color-gold: #d4af37;
+	--color-silver: #c0c0c0;
+	--color-bronze: #cd7f32;
 }
 @plugin "daisyui/theme" {
 	name: 'dark';
@@ -46,9 +46,9 @@
 	--color-error: #ffa8a8;
 	--color-error-content: #ef3333;
 
-	--color-gold: #D4AF37;
-	--color-silver: #C0C0C0;
-	--color-bronze: #CD7F32;
+	--color-gold: #d4af37;
+	--color-silver: #c0c0c0;
+	--color-bronze: #cd7f32;
 }
 
 .btn {

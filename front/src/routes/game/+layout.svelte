@@ -2,12 +2,12 @@
 	import { beforeNavigate } from '$app/navigation';
 	import { getContext, setContext } from 'svelte';
 	import { type Snapshot } from '@sveltejs/kit';
-	import type { GameContext } from '$lib/gameContext';
+	import type { ChosenWord, GameContext } from '$lib/gameContext';
 	import { writable, type Writable } from 'svelte/store';
 
 	let { children } = $props();
 
-	const chosenWords = writable<string[]>([]);
+	const chosenWords = writable<ChosenWord[]>([]);
 	const points = writable<number>(0);
 	const problemId = writable<string>('');
 	const gameStarted = writable<boolean>(false);

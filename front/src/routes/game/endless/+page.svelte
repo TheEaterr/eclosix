@@ -3,12 +3,12 @@
 	import { getContext } from 'svelte';
 	import type { Snapshot } from './$types';
 	import { type Writable } from 'svelte/store';
-	import type { GameContext } from '$lib/gameContext';
+	import type { ChosenWord, GameContext } from '$lib/gameContext';
 	import GamePage from '$lib/components/game/GamePage.svelte';
 
 	let { data } = $props();
 
-	const chosenWords = getContext<Writable<string[]>>('chosenWords');
+	const chosenWords = getContext<Writable<ChosenWord[]>>('chosenWords');
 	const points = getContext<Writable<number>>('points');
 	const problemId = getContext<Writable<string>>('problemId');
 	const gameWon = getContext<Writable<boolean>>('gameWon');

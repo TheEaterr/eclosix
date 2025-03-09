@@ -7,8 +7,8 @@
 	}: { letter: string; onClick: (letter: string) => void; isCenter: boolean; bonusLetter: string } =
 		$props();
 
-	const isBonus = letter === bonusLetter;
-	const color = isCenter ? 'primary' : isBonus ? 'secondary' : 'neutral';
+	const isBonus = $derived(letter === bonusLetter);
+	const color = $derived(isCenter ? 'primary' : isBonus ? 'secondary' : 'neutral');
 </script>
 
 <button
@@ -41,12 +41,12 @@
 	</div>
 	<div class="absolute top-[-8px] left-[-8px] h-full w-full">
 		<svg
-		xmlns="http://www.w3.org/2000/svg"
-		height="120%"
-		width="120%"
-		viewBox="-15.51 -52.47 61.01 52.97"
-		vector-effect="non-scaling-stroke"
-	>
+			xmlns="http://www.w3.org/2000/svg"
+			height="120%"
+			width="120%"
+			viewBox="-15.51 -52.47 61.01 52.97"
+			vector-effect="non-scaling-stroke"
+		>
 			<path
 				fill="none"
 				stroke-width="var(--focus-stroke-width)"
@@ -56,7 +56,7 @@
 				d="M 0,0 L 30,0 L 45,-25.98 L 30,-51.96 L 0,-51.96 L -15,-25.98 L 0,0 "
 			>
 			</path>
-	</svg>
+		</svg>
 	</div>
 </button>
 
@@ -72,8 +72,16 @@
 		}
 		&:active:not(.btn-active) {
 			translate: 0 0.5px;
-			--btn-bg: color-mix(in oklab, var(--btn-color, var(--color-base-200) /* var(--color-base-200) */), #000 5%);
-			--btn-border: color-mix(in oklab, var(--btn-color, var(--color-base-200) /* var(--color-base-200) */), #000 7%);
+			--btn-bg: color-mix(
+				in oklab,
+				var(--btn-color, var(--color-base-200) /* var(--color-base-200) */),
+				#000 5%
+			);
+			--btn-border: color-mix(
+				in oklab,
+				var(--btn-color, var(--color-base-200) /* var(--color-base-200) */),
+				#000 7%
+			);
 			--btn-shadow: 0 0 0 0 oklch(0% 0 0/0), 0 0 0 0 oklch(0% 0 0/0);
 		}
 	}

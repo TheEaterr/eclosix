@@ -1,5 +1,10 @@
+export type ChosenWord = {
+	word: string;
+	points: number;
+};
+
 export type GameContext = {
 	points: number;
-	chosenWords: string[];
+	chosenWords: ChosenWord[];
 	problemId: string;
 };

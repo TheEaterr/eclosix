@@ -5,8 +5,9 @@
 	import Header from '$lib/components/header/Header.svelte';
 	import type { Problem } from '$lib/pocketBase';
 	import LoadingLogo from '../LoadingLogo.svelte';
+	import type { ChosenWord } from '$lib/gameContext';
 
-	const chosenWords = getContext<Writable<string[]>>('chosenWords');
+	const chosenWords = getContext<Writable<ChosenWord[]>>('chosenWords');
 	const points = getContext<Writable<number>>('points');
 
 	let { problem, isDaily, reset }: { problem?: Problem; isDaily: boolean; reset: () => void } =
