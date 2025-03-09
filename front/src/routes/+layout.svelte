@@ -3,7 +3,7 @@
 	import { navigating } from '$app/state';
 	import { writable } from 'svelte/store';
 	import { setContext } from 'svelte';
-	import DecoratedBackground from '../decorations/DecoratedBackground.svelte';
+	import DecoratedBackground from '$lib/components/decorations/DecoratedBackground.svelte';
 	import LoadingLogo from '$lib/components/LoadingLogo.svelte';
 
 	let { children } = $props();

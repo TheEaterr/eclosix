@@ -1,5 +1,5 @@
 <script lang="ts">
-	import GamePage from '$lib/components/GamePage.svelte';
+	import GamePage from '$lib/components/game/GamePage.svelte';
 	import { getContext } from 'svelte';
 	import { type Snapshot } from '@sveltejs/kit';
 	import type { GameContext } from '$lib/gameContext';

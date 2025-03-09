@@ -8,10 +8,14 @@
 		$props();
 
 	const isBonus = letter === bonusLetter;
-	const color = isCenter ? '#ff0000' : isBonus ? '#ffff00' : '#000000';
+	const color = isCenter ? 'primary' : isBonus ? 'secondary' : 'neutral';
 </script>
 
-<button class="link relative h-20 w-20" onclick={() => onClick(letter)}>
+<button
+	class="link text-neutral hover:border-primary hover:text-primary-content relative h-20 w-20 font-bold"
+	style="--path-bg-base: var(--color-{color}-content); --path-bg-hover: var(--color-{color})"
+	onclick={() => onClick(letter)}
+>
 	<div class="absolute top-0 left-0 z-10 flex h-full w-full items-center justify-center text-5xl">
 		{letter}
 	</div>
@@ -25,8 +29,7 @@
 		>
 			<path
 				fill="none"
-				stroke={color}
-				stroke-width="1"
+				stroke-width="2"
 				stroke-linejoin="round"
 				stroke-linecap="round"
 				stroke-dasharray="none"
@@ -38,4 +41,12 @@
 </button>
 
 <style>
+	button path {
+		fill: var(--path-bg-base);
+		stroke: var(--path-bg-hover);
+	}
+	button:hover path {
+		fill: var(--path-bg-hover);
+		stroke: var(--path-bg-base);
+	}
 </style>

@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
 	import { type Writable } from 'svelte/store';
-	import Game from '$lib/components/Game.svelte';
+	import Game from '$lib/components/game/Game.svelte';
 	import Header from '$lib/components/header/Header.svelte';
 	import type { Problem } from '$lib/pocketBase';
-	import LoadingLogo from './LoadingLogo.svelte';
+	import LoadingLogo from '../LoadingLogo.svelte';
 
 	const chosenWords = getContext<Writable<string[]>>('chosenWords');
 	const points = getContext<Writable<number>>('points');

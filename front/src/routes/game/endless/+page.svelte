@@ -4,7 +4,7 @@
 	import type { Snapshot } from './$types';
 	import { type Writable } from 'svelte/store';
 	import type { GameContext } from '$lib/gameContext';
-	import GamePage from '$lib/components/GamePage.svelte';
+	import GamePage from '$lib/components/game/GamePage.svelte';
 
 	let { data } = $props();
 

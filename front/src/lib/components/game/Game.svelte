@@ -3,8 +3,9 @@
 	import { type Writable } from 'svelte/store';
 	import { testWord, type Problem } from '$lib/pocketBase';
 	import LetterButton from './LetterButton.svelte';
-	import { IconTrophy } from '@tabler/icons-svelte';
+	import { IconTrophy, IconTrash, IconArrowLeft } from '@tabler/icons-svelte';
 	import { cyrb128 } from '$lib/hash';
+	import { getNumberOfPoints } from './utils';
 
 	let { problem, isDaily }: { problem: Problem; isDaily: boolean } = $props();
 
@@ -27,44 +28,14 @@
 	let bonusLetter = $state('');
 	setBonusLetter();
 
+	const sideLetters = problem.availableLetters.filter((letter) => letter !== problem.centerLetter);
+
 	const onLetterButtonClick = (letter: string) => {
-		currentWord += letter.toUpperCase();
-	};
-
-	const getNumberOfPoints = (word: string): number => {
-		let wordPoints = 0;
-		if (word.length == 4) {
-			wordPoints = 2;
-		} else if (word.length == 5) {
-			wordPoints = 4;
-		} else if (word.length == 6) {
-			wordPoints = 6;
-		} else if (word.length == 7) {
-			wordPoints = 12;
-		} else {
-			wordPoints = 12 + (word.length - 7) * 3;
-		}
-
-		if (word.includes(bonusLetter)) {
-			wordPoints = wordPoints + 5;
-		}
-
-		let hasAllLetters = true;
-		for (const letter of problem.availableLetters) {
-			if (!word.includes(letter)) {
-				hasAllLetters = false;
-				break;
-			}
-		}
-		if (hasAllLetters) {
-			wordPoints = wordPoints + 7;
-		}
-
-		return wordPoints;
+		currentWord += letter.toLowerCase();
 	};
 
 	const submitWord = async () => {
-		if (currentWord.length < 3) {
+		if (currentWord.length < 3 || !currentWord.includes(problem.centerLetter)) {
 			return;
 		}
 
@@ -79,7 +50,9 @@
 			}
 			return [...words, currentWord];
 		});
-		points.update((points) => points + getNumberOfPoints(currentWord.toLowerCase()));
+		points.update(
+			(points) => points + getNumberOfPoints(currentWord.toLowerCase(), problem, bonusLetter)
+		);
 		currentWord = '';
 		setBonusLetter();
 	};
@@ -123,12 +96,13 @@
 				<div class="badge badge-primary">{word}</div>
 			{/each}
 		</div>
-		<div class="join">
+		<fieldset class="fieldset">
+			<legend class="fieldset-legend text-sm">Écrivez ou utilisez les boutons</legend>
 			<input
 				type="text"
 				value={currentWord}
-				placeholder="Écrivez ou utilisez les boutons..."
-				class="input input-primary input-xl w-100 rounded-l-xl"
+				placeholder="_"
+				class="input input-primary input-xl w-full uppercase"
 				oninput={(event) => {
 					const target = event.target as HTMLInputElement;
 					const value = target.value;
@@ -137,7 +111,7 @@
 					const letters = value
 						.split('')
 						.filter((letter) => availableLetters.includes(letter.toLowerCase()));
-					target.value = letters.join('').toUpperCase();
+					target.value = letters.join('').toLowerCase();
 					currentWord = target.value;
 				}}
 				onkeyup={(event) => {
@@ -146,26 +120,75 @@
 					}
 				}}
 			/>
+		</fieldset>
+		<div class="flex flex-row flex-wrap items-center justify-center gap-2">
 			<button
 				class="btn btn-neutral-special btn-square btn-xl join-item"
 				onclick={() => {
 					currentWord = currentWord.slice(0, currentWord.length - 1);
-				}}>x</button
+				}}
 			>
+				<IconArrowLeft size={30} />
+			</button>
 			<button
-				class="btn btn-primary-special btn-xl join-item rounded-r-xl"
-				onclick={() => submitWord()}>Soumettre</button
+				class="btn btn-error-special btn-square btn-xl join-item"
+				onclick={() => {
+					currentWord = '';
+				}}
 			>
+				<IconTrash size={30} />
+			</button>
+			<button class="btn btn-primary-special btn-xl" onclick={() => submitWord()}>Soumettre</button>
 		</div>
-		<div class="bg-base-100 flex flex-row gap-2">
-			{#each problem.availableLetters as letter (letter + bonusLetter)}
+		<div class="bg-base-100 flex flex-row">
+			<div class="bg-base-100 mt-10 flex flex-col">
 				<LetterButton
-					{letter}
+					letter={sideLetters[0]}
 					onClick={onLetterButtonClick}
-					isCenter={letter == problem.centerLetter}
+					isCenter={false}
 					{bonusLetter}
 				/>
-			{/each}
+				<LetterButton
+					letter={sideLetters[1]}
+					onClick={onLetterButtonClick}
+					isCenter={false}
+					{bonusLetter}
+				/>
+			</div>
+			<div class="bg-base-100 mr-[-0.625rem] ml-[-0.625rem] flex flex-col">
+				<LetterButton
+					letter={sideLetters[2]}
+					onClick={onLetterButtonClick}
+					isCenter={false}
+					{bonusLetter}
+				/>
+				<LetterButton
+					letter={problem.centerLetter}
+					onClick={onLetterButtonClick}
+					isCenter={true}
+					{bonusLetter}
+				/>
+				<LetterButton
+					letter={sideLetters[3]}
+					onClick={onLetterButtonClick}
+					isCenter={false}
+					{bonusLetter}
+				/>
+			</div>
+			<div class="bg-base-100 mt-10 flex flex-col">
+				<LetterButton
+					letter={sideLetters[4]}
+					onClick={onLetterButtonClick}
+					isCenter={false}
+					{bonusLetter}
+				/>
+				<LetterButton
+					letter={sideLetters[5]}
+					onClick={onLetterButtonClick}
+					isCenter={false}
+					{bonusLetter}
+				/>
+			</div>
 		</div>
 	</div>
 </div>

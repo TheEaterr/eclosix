@@ -20,12 +20,13 @@
 			<div class="max-w-md">
 				<h1 class="title text-primary text-5xl font-bold sm:text-6xl lg:text-7xl">Éclosix</h1>
 				<div class="m-3 mt-5">
-					<button onclick={() => goto('/game/daily')} class="btn-primary-special main-btn btn"
-						>Quotidienne</button
+					<button
+						onclick={() => goto('/game/daily')}
+						class="btn-primary-special sm:btn-lg btn text-lg">Quotidienne</button
 					>
 					<button
 						onclick={() => goto('/game/endless')}
-						class="btn-secondary-special main-btn btn ml-5">Infini</button
+						class="btn-secondary-special sm:btn-lg btn ml-5 text-lg">Infini</button
 					>
 				</div>
 				<div>
