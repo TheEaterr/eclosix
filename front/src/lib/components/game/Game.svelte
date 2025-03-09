@@ -79,7 +79,7 @@
 	};
 
 	$effect(() => {
-		if ($chosenWords.length == 3) {
+		if ($chosenWords.length == 12) {
 			gameWon.set(true);
 			if ($points >= 350) {
 				gameWonMessage = `CLASSE EXCEPTIONNELLE`;
