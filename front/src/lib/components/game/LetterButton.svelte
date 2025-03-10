@@ -9,11 +9,19 @@
 
 	const isBonus = $derived(letter === bonusLetter);
 	const color = $derived(isCenter ? 'primary' : isBonus ? 'secondary' : 'neutral');
+	const classes = {
+		primary:
+			'text-primary hover:text-primary-content fill-(--color-primary-content) hover:fill-(--color-primary) stroke-primary hover:stroke-primary-content',
+		secondary:
+			'text-secondary hover:text-secondary-content fill-(--color-secondary-content) hover:fill-(--color-secondary) stroke-secondary hover:stroke-secondary-content',
+		neutral:
+			'text-neutral hover:text-neutral-content fill-(--color-neutral-content) hover:fill-(--color-neutral) stroke-neutral hover:stroke-neutral-content'
+	};
 </script>
 
 <button
-	class="link text-neutral hover:border-primary hover:text-primary-content relative h-20 w-20 font-bold"
-	style="--path-bg-base: var(--color-{color}-content); --path-bg-hover: var(--color-{color})"
+	class="link text-neutral {classes[color]} relative h-20 w-20 font-bold"
+	type="button"
 	onclick={() => onClick(letter)}
 >
 	<div class="absolute top-0 left-0 z-10 flex h-full w-full items-center justify-center text-5xl">
@@ -29,7 +37,6 @@
 		>
 			<path
 				id="letter"
-				fill="none"
 				stroke-width="2"
 				stroke-linejoin="round"
 				stroke-linecap="round"
@@ -52,7 +59,7 @@
 				stroke-width="var(--focus-stroke-width)"
 				stroke-linejoin="round"
 				stroke-linecap="round"
-				stroke="var(--path-bg-hover)"
+				stroke="var(--color-{color})"
 				d="M 0,0 L 30,0 L 45,-25.98 L 30,-51.96 L 0,-51.96 L -15,-25.98 L 0,0 "
 			>
 			</path>
@@ -72,25 +79,6 @@
 		}
 		&:active:not(.btn-active) {
 			translate: 0 0.5px;
-			--btn-bg: color-mix(
-				in oklab,
-				var(--btn-color, var(--color-base-200) /* var(--color-base-200) */),
-				#000 5%
-			);
-			--btn-border: color-mix(
-				in oklab,
-				var(--btn-color, var(--color-base-200) /* var(--color-base-200) */),
-				#000 7%
-			);
-			--btn-shadow: 0 0 0 0 oklch(0% 0 0/0), 0 0 0 0 oklch(0% 0 0/0);
 		}
-	}
-	button #letter {
-		fill: var(--path-bg-base);
-		stroke: var(--path-bg-hover);
-	}
-	button:hover #letter {
-		fill: var(--path-bg-hover);
-		stroke: var(--path-bg-base);
 	}
 </style>

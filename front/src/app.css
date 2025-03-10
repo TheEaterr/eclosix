@@ -5,6 +5,7 @@
 @plugin "daisyui/theme" {
 	name: 'light';
 	default: true; /* set as default */
+	color-scheme: light;
 
 	--color-base-100: #ffffff;
 	--color-primary: #115e59;
@@ -29,6 +30,8 @@
 @plugin "daisyui/theme" {
 	name: 'dark';
 	default: false; /* set as default */
+	prefersdark: true; /* enable dark mode */
+	color-scheme: dark;
 
 	--color-base-100: #374151;
 	--color-primary: #d0dddb;
@@ -69,6 +72,10 @@
 
 .btn-error-special {
 	@apply btn-outline btn-error bg-error-content text-neutral hover:border-error hover:bg-error hover:text-error-content font-bold;
+}
+
+.btn-secondary-special {
+	@apply btn-secondary bg-secondary-content text-neutral hover:border-secondary hover:bg-secondary hover:text-secondary-content font-bold;
 }
 
 .alert {
