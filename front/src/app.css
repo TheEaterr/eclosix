@@ -1,7 +1,9 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
-@plugin "daisyui";
+@plugin "daisyui" {
+	themes: light --default;
+}
 @plugin "daisyui/theme" {
 	name: 'light';
 	default: true; /* set as default */
@@ -30,8 +32,7 @@
 @plugin "daisyui/theme" {
 	name: 'dark';
 	default: false; /* set as default */
-	prefersdark: true; /* enable dark mode */
-	color-scheme: dark;
+	color-scheme: dark;	
 
 	--color-base-100: #374151;
 	--color-primary: #d0dddb;
