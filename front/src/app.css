@@ -32,7 +32,7 @@
 @plugin "daisyui/theme" {
 	name: 'dark';
 	default: false; /* set as default */
-	color-scheme: dark;	
+	color-scheme: dark;
 
 	--color-base-100: #374151;
 	--color-primary: #d0dddb;
