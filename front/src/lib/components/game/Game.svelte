@@ -117,9 +117,10 @@
 		showShared = true;
 	};
 
-	const onKeyDown = () => {
-		// focus on input
-		if (inputField) {
+	const onKeyDown = (event: KeyboardEvent) => {
+		// check if event is one of the letters
+		const letter = event.key.toLowerCase();
+		if (inputField && problem.availableLetters.includes(letter)) {
 			inputField.focus();
 		}
 	};
