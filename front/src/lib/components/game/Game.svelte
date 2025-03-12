@@ -23,6 +23,8 @@
 	const gameWon = getContext<Writable<boolean>>('gameWon');
 	gameWon.set(false);
 
+	let inputField: HTMLInputElement | null = $state(null);
+
 	const setBonusLetter = () => {
 		// hash the id
 		const hash = cyrb128(problem.id + $chosenWords.length);
@@ -114,6 +116,13 @@
 		}
 		showShared = true;
 	};
+
+	const onKeyDown = () => {
+		// focus on input
+		if (inputField) {
+			inputField.focus();
+		}
+	};
 </script>
 
 <div class="flex flex-col justify-center gap-5">
@@ -122,12 +131,11 @@
 		{#if !$gameWon}
 			<fieldset class="fieldset">
 				<legend class="fieldset-legend text-sm">Écrivez ou utilisez les boutons</legend>
-				<!-- svelte-ignore a11y_autofocus -->
 				<input
+					bind:this={inputField}
 					type="text"
 					value={currentWord}
 					placeholder="_"
-					autofocus={true}
 					class="input input-primary input-xl w-full uppercase"
 					oninput={(event) => {
 						showAlert = false;
@@ -288,6 +296,8 @@
 		</div>
 	</div>
 </div>
+
+<svelte:window on:keydown={onKeyDown} />
 
 <style>
 </style>
