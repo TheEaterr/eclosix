@@ -8,7 +8,7 @@
 	let { data } = $props();
 	const problemId = getContext<Writable<string>>('problemId');
 	problemId.set(data.id);
-	
+
 	const fixedReset = getContext<() => void>('fixedReset');
 	export const snapshot = getContext<Snapshot<GameContext | undefined>>('fixedSnapshot');
 </script>
