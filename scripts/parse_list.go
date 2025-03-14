@@ -13,13 +13,20 @@ type Word struct {
 	Preprocessed string
 }
 
-type Candidate struct {
-	Word             string
-	AvailableLetters []string
+type Problem struct {
+	CenterLetter string
+	Letters      []string
+	TopMatches   []string
+	MaxPoints    int
+}
+
+type Match struct {
+	Word   string
+	Points int
 }
 
 var translationTable = map[rune]rune{
-	'é': 'e', 'à': 'a', 'è': 'e', 'ù': 'u', 'â': 'a', 'ê': 'e', 'î': 'i', 'ô': 'o', 'û': 'u', 'ç': 'c'}
+	'é': 'e', 'à': 'a', 'è': 'e', 'ù': 'u', 'â': 'a', 'ê': 'e', 'î': 'i', 'ô': 'o', 'û': 'u', 'ç': 'c', 'ï': 'i', 'ü': 'u', 'ë': 'e', 'ö': 'o', 'ä': 'a'}
 var uniqueWords = make(map[string]struct{})
 var wordsList []Word
 var wg sync.WaitGroup
@@ -27,14 +34,23 @@ var mutex sync.Mutex
 
 func preprocessWord(word string) string {
 	translated := ""
-	if strings.ContainsAny(word, "-") || len(word) < 4 {
-		return ""
-	}
 	for _, c := range word {
 		if _, exists := translationTable[c]; exists {
 			translated += string(translationTable[c])
 		} else {
 			translated += string(c)
+		}
+	}
+
+	if strings.ContainsAny(word, "-") || len(translated) < 4 {
+		return ""
+	}
+	// check translated string is ascii
+	for _, c := range translated {
+		if c > 127 {
+			fmt.Println("Non ascii character", c)
+			fmt.Println("Original word", word)
+			return ""
 		}
 	}
 	return strings.ToLower(translated)
@@ -52,20 +68,27 @@ func parseList() {
 	}
 
 	candidates := make([]int, 0)
+	registered_candidates := make(map[int]struct{})
 	for _, word := range frenchWords {
 		wordStr := strings.ToLower(word)
 		uniqueWords[wordStr] = struct{}{}
 		preprocessedWord := preprocessWord(wordStr)
 		if preprocessedWord != "" {
 			mutex.Lock()
-			wordsList = append(wordsList, Word{Raw: word, Preprocessed: preprocessWord(word)})
+			wordsList = append(wordsList, Word{Raw: word, Preprocessed: preprocessedWord})
 			i := len(wordsList) - 1
 			mutex.Unlock()
 			wg.Add(1)
 			go func(i int) {
 				defer wg.Done()
 				if len(set(wordsList[i].Preprocessed)) == 7 {
-					candidates = append(candidates, i)
+					mutex.Lock()
+					mask := calculateMask(wordsList[i].Preprocessed)
+					if _, exists := registered_candidates[mask]; !exists {
+						registered_candidates[mask] = struct{}{}
+						candidates = append(candidates, i)
+					}
+					mutex.Unlock()
 				}
 			}(i)
 		}
@@ -75,36 +98,28 @@ func parseList() {
 	fmt.Println("Processed all words")
 
 	masks := make([]int, len(wordsList))
-	candidatesSet := make(map[int]struct{})
 	for i, word := range wordsList {
-		if _, exists := candidatesSet[i]; !exists {
-			uniqueLetters := set(word.Preprocessed)
-			mask := 0
-			for c := range uniqueLetters {
-				pos := int(c - 'a')
-				if pos < 0 {
-					fmt.Println(c)
-				}
-				mask |= (1 << pos)
-			}
-			masks[i] = mask
-		}
+		masks[i] = calculateMask(word.Preprocessed)
 	}
 
-	result := make([]Candidate, 0)
+	result := make([]Problem, 0)
 	min_count := len(wordsList)
+	max_count := 0
 	for i, index := range candidates {
 		currentMask := masks[index]
 		count := 0
-		matches := make([]string, 0)
+		matches := make([]Match, 0)
 		for j := range wordsList {
-			if index == j {
-				continue
-			}
 			otherMask := masks[j]
 			if (otherMask & currentMask) == otherMask {
 				count++
-				matches = append(matches, wordsList[j].Raw)
+				// Always add 5 bonus letter points to the word
+				// to calculate max points
+				points := getBaseNumberOfPoints(wordsList[j].Preprocessed) + 5
+				if (otherMask & currentMask) == currentMask {
+					points += 7
+				}
+				matches = append(matches, Match{wordsList[j].Preprocessed, points})
 			}
 		}
 
@@ -115,11 +130,17 @@ func parseList() {
 			fmt.Println("Words", matches)
 		}
 
+		if count > max_count {
+			max_count = count
+			fmt.Println("Word", wordsList[index].Raw)
+			fmt.Println("New max count", max_count)
+		}
+
 		available := make([]string, 0)
 		for c := range set(wordsList[index].Preprocessed) {
 			count_letter := 0
-			for _, word := range matches {
-				if strings.Contains(word, string(c)) {
+			for _, match := range matches {
+				if strings.Contains(match.Word, string(c)) {
 					count_letter++
 				}
 			}
@@ -133,10 +154,43 @@ func parseList() {
 			continue
 		}
 
-		result = append(result, Candidate{
-			Word:             wordsList[index].Preprocessed,
-			AvailableLetters: available,
-		})
+		for k := range matches {
+			for j := k + 1; j < len(matches); j++ {
+				if matches[k].Points < matches[j].Points {
+					matches[k], matches[j] = matches[j], matches[k]
+				}
+			}
+		}
+
+		runeLetters := set(wordsList[index].Preprocessed)
+		// convert runeLetters to strings
+		letters := make([]string, 0)
+		for c := range runeLetters {
+			letters = append(letters, string(c))
+		}
+
+		for _, centerLetter := range available {
+			topMatches := make([]string, 0, 50)
+			j := 0
+			maxPoints := 0
+			for len(topMatches) < 50 && j < len(matches) {
+				if strings.Contains(matches[j].Word, centerLetter) {
+					topMatches = append(topMatches, matches[j].Word)
+					if len(topMatches) < 12 {
+						maxPoints += matches[j].Points
+					}
+				}
+				j++
+			}
+
+			problem := Problem{
+				CenterLetter: centerLetter,
+				Letters:      letters,
+				TopMatches:   topMatches,
+				MaxPoints:    maxPoints,
+			}
+			result = append(result, problem)
+		}
 		if i%1000 == 0 {
 			fmt.Println(i)
 		}
@@ -164,6 +218,35 @@ func parseList() {
 		fmt.Println(err)
 		return
 	}
+}
+
+func getBaseNumberOfPoints(word string) int {
+	wordPoints := 0
+	if len(word) == 4 {
+		wordPoints = 2
+	} else if len(word) == 5 {
+		wordPoints = 4
+	} else if len(word) == 6 {
+		wordPoints = 6
+	} else if len(word) == 7 {
+		wordPoints = 12
+	} else {
+		wordPoints = 12 + (len(word)-7)*3
+	}
+	return wordPoints
+}
+
+func calculateMask(word string) int {
+	uniqueLetters := set(word)
+	mask := 0
+	for c := range uniqueLetters {
+		pos := int(c - 'a')
+		if pos < 0 {
+			fmt.Println(c)
+		}
+		mask |= (1 << pos)
+	}
+	return mask
 }
 
 func readCSV(file string) ([]string, error) {

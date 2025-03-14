@@ -1,5 +1,6 @@
 export type ChosenWord = {
 	word: string;
+	raw: string;
 	points: number;
 };
 

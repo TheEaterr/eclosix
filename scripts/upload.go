@@ -10,9 +10,9 @@ import (
 	"github.com/pocketbase/pocketbase/core"
 )
 
-func getData() ([]Candidate, []Word, error) {
+func getData() ([]Problem, []Word, error) {
 	// read the result.json file
-	result := make([]Candidate, 0)
+	result := make([]Problem, 0)
 	resultData, err := os.ReadFile("result.json")
 	if err != nil {
 		fmt.Println(err)
@@ -57,7 +57,7 @@ func upload() {
 		if err != nil {
 			return err
 		}
-		candidatesCollection, err := app.FindCollectionByNameOrId("candidates")
+		problemsCollection, err := app.FindCollectionByNameOrId("problems")
 		if err != nil {
 			return err
 		}
@@ -67,6 +67,7 @@ func upload() {
 			record := core.NewRecord(wordsCollection)
 
 			record.Set("word", word.Preprocessed)
+			record.Set("raw", word.Raw)
 
 			// validate and persist
 			// (use SaveNoValidate to skip fields validation)
@@ -81,11 +82,18 @@ func upload() {
 			}
 		}
 
-		for i, candidate := range result {
-			record := core.NewRecord(candidatesCollection)
+		for i, problem := range result {
+			translatedMatches := make([]string, 0, len(problem.TopMatches))
+			for _, match := range problem.TopMatches {
+				translatedMatches = append(translatedMatches, wordIds[match])
+			}
 
-			record.Set("word", wordIds[candidate.Word])
-			record.Set("available_letters", candidate.AvailableLetters)
+			record := core.NewRecord(problemsCollection)
+
+			record.Set("letters", problem.Letters)
+			record.Set("center_letter", problem.CenterLetter)
+			record.Set("top_matches", translatedMatches)
+			record.Set("max_points", problem.MaxPoints)
 
 			err = app.Save(record)
 			if err != nil {

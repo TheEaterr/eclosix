@@ -2,7 +2,7 @@
 	import type { ChosenWord } from '$lib/gameContext';
 	import { IconLaurelWreath1, IconLaurelWreath2, IconLaurelWreath3 } from '@tabler/icons-svelte';
 
-	let { word }: { word: ChosenWord } = $props();
+	let { word, fixedSize }: { word: ChosenWord, fixedSize: boolean } = $props();
 
 	const getTier = (points: number) => {
 		if (points >= 30) {
@@ -33,6 +33,8 @@
 	};
 
 	const getTierFontSize = (tier: string) => {
+		if (fixedSize)
+			return 'text-lg';
 		switch (tier) {
 			case 'bronze':
 				return 'text-xl';
@@ -46,6 +48,8 @@
 	};
 
 	const getTierFontWeight = (tier: string) => {
+		if (fixedSize)
+			return 'font-normal';
 		switch (tier) {
 			case 'bronze':
 				return 'font-bold';
@@ -59,6 +63,8 @@
 	};
 
 	const getTierBadgeSize = (tier: string) => {
+		if (fixedSize)
+			return '';
 		switch (tier) {
 			case 'bronze':
 				return 'badge-lg';
@@ -78,7 +84,7 @@
 	)} {getTierFontSize(tier)}"
 	style="background-color: {getTierColor(tier)}"
 >
-	{word.word}
+	{word.raw}
 	<div class="ml-4">{word.points}</div>
 	{#if tier === 'bronze'}
 		<IconLaurelWreath3 />

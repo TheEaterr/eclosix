@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
 	import { type Writable } from 'svelte/store';
-	import { testWord, type Problem } from '$lib/pocketBase';
+	import { getTopMatches, testWord, type Problem } from '$lib/pocketBase';
 	import LetterButton from './LetterButton.svelte';
 	import {
 		IconTrophy,
@@ -18,6 +18,8 @@
 
 	let { problem, isDaily }: { problem: Problem; isDaily: boolean } = $props();
 
+	let top_matches: string[] | null = $state(null);
+
 	const chosenWords = getContext<Writable<ChosenWord[]>>('chosenWords');
 	const points = getContext<Writable<number>>('points');
 	const gameWon = getContext<Writable<boolean>>('gameWon');
@@ -33,7 +35,6 @@
 		);
 		const index = hash[0] % nonCenterLetters.length;
 		bonusLetter = nonCenterLetters[index];
-		console.log(bonusLetter);
 	};
 
 	let currentWord = $state('');
@@ -71,8 +72,8 @@
 			return;
 		}
 
-		const isValid = await testWord(currentWord.toLowerCase());
-		if (!isValid) {
+		const rawWord = await testWord(currentWord.toLowerCase());
+		if (!rawWord) {
 			alertMessage = "Ce mot n'existe pas.";
 			showAlert = true;
 			return;
@@ -80,7 +81,7 @@
 
 		const newPoints = getNumberOfPoints(currentWord.toLowerCase(), problem, bonusLetter);
 		chosenWords.update((words) => {
-			const newChosenWord = { word: currentWord, points: newPoints };
+			const newChosenWord = { word: currentWord, raw: rawWord, points: newPoints };
 			return [...words, newChosenWord];
 		});
 		points.update((points) => points + newPoints);
@@ -101,6 +102,9 @@
 				gameWonMessage = `DEUXIÈME CLASSE`;
 				gameWonClass = 'bronze';
 			}
+			getTopMatches(problem).then((matches) => {
+				top_matches = matches;
+			});
 		}
 	});
 
@@ -124,10 +128,14 @@
 			inputField.focus();
 		}
 	};
+	
+	const getWordFromMatch = (match: string) => {
+		return $chosenWords.filter((word) => word.word == match)[0]
+	};
 </script>
 
 <div class="flex flex-col justify-center gap-5">
-	<div class="m-auto flex max-w-screen-md flex-col flex-wrap items-center justify-center gap-5">
+	<div class="m-auto flex max-w-screen-sm flex-col flex-wrap items-center justify-center gap-5">
 		<h3 class="small-title text-primary text-3xl font-bold">Éclosix</h3>
 		{#if !$gameWon}
 			<fieldset class="fieldset">
@@ -243,7 +251,13 @@
 					<IconTrophy size={30} />
 				</div>
 				<div class="stat-title mb-2 text-lg font-semibold">Points</div>
-				<div class="small-title stat-value text-primary">{$points}</div>
+				<div class="small-title stat-value text-primary">
+					{#if $gameWon}
+						{$points} / {problem.maxPoints} ({Math.round(($points / problem.maxPoints) * 100)}%)
+					{:else}
+						{$points}
+					{/if}
+				</div>
 			</div>
 			{#if $gameWon}
 				{#if gameWonMessage}
@@ -281,6 +295,28 @@
 						>
 					</div>
 				</div>
+				<div class="stat">
+					<div class="stat-title mb-2 text-lg font-semibold">
+						Meilleurs mots
+					</div>
+					{#if top_matches}
+					<div class="text-justify text-neutral">
+						{#each top_matches as match (match)}
+						{#if $chosenWords.map((word) => word.word).includes(match)}
+						<span class="mr-2">
+							<WordBadge word={getWordFromMatch(match)} fixedSize={true}/>
+						</span>
+						{:else}
+							{match + " "}
+						{/if}
+						{/each}
+					</div>
+					{:else}
+					<div class="stat-value justify-self-center">
+						<span class="loading loading-dots loading-lg text-neutral"></span>
+					</div>
+					{/if}
+				</div>
 			{/if}
 			{#if $chosenWords.length > 0}
 				<div class="stat">
@@ -289,7 +325,7 @@
 					</div>
 					<div class="flex flex-col flex-wrap items-center gap-2">
 						{#each $chosenWords.toReversed() as word (word)}
-							<WordBadge {word} />
+							<WordBadge {word} fixedSize={false}/>
 						{/each}
 					</div>
 				</div>
