@@ -30,7 +30,7 @@
 			}
 		},
 		restore: async (value) => {
-			if (!value || !value.chosenWords) {
+			if (!value || !value.chosenWords || value.problemId !== $problemId) {
 				value = {
 					chosenWords: [],
 					points: 0,
