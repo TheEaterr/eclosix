@@ -170,7 +170,7 @@
 			{/if}
 			<div class="flex flex-row flex-wrap items-center justify-center gap-2">
 				<button
-					class="btn btn-neutral-special btn-square btn-xl join-item"
+					class="btn btn-neutral-special btn-square btn-xl"
 					onclick={() => {
 						showAlert = false;
 						currentWord = currentWord.slice(0, currentWord.length - 1);
@@ -179,7 +179,7 @@
 					<IconArrowLeft size={30} />
 				</button>
 				<button
-					class="btn btn-error-special btn-square btn-xl join-item"
+					class="btn btn-error-special btn-square btn-xl"
 					onclick={() => {
 						showAlert = false;
 						currentWord = '';
