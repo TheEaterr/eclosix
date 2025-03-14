@@ -11,7 +11,7 @@
 	/>
 </svelte:head>
 
-<Header onlyTheme={true} />
+<Header />
 
 <main class="fixed top-0 flex min-h-screen w-screen content-center items-center justify-center">
 	<div class="hero h-fit w-fit">

@@ -42,7 +42,6 @@
 	"dependencies": {
 		"@tabler/icons-svelte": "^3.31.0",
 		"daisyui": "^5.0.0",
-		"pocketbase": "^0.25.2",
-		"theme-change": "^2.5.0"
+		"pocketbase": "^0.25.2"
 	}
 }

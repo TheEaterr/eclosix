@@ -33,6 +33,7 @@
 	name: 'dark';
 	default: false; /* set as default */
 	color-scheme: dark;
+	prefersdark: true;
 
 	--color-base-100: #374151;
 	--color-primary: #d0dddb;
