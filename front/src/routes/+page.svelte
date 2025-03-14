@@ -11,8 +11,6 @@
 	/>
 </svelte:head>
 
-<Header />
-
 <main class="fixed top-0 flex min-h-screen w-screen content-center items-center justify-center">
 	<div class="hero h-fit w-fit">
 		<div class="hero-overlay bg-base-100"></div>
