@@ -10,15 +10,13 @@
 		IconExclamationCircle,
 		IconShare
 	} from '@tabler/icons-svelte';
-	import { cyrb128 } from '$lib/hash';
 	import { getNumberOfPoints } from './utils';
 	import WordBadge from './WordBadge.svelte';
 	import { goto } from '$app/navigation';
 	import type { ChosenWord } from '$lib/gameContext';
+	import { shuffleArray } from '$lib/hash';
 
 	let { problem, isDaily }: { problem: Problem; isDaily: boolean } = $props();
-
-	let top_matches: string[] | null = $state(null);
 
 	const chosenWords = getContext<Writable<ChosenWord[]>>('chosenWords');
 	const points = getContext<Writable<number>>('points');
@@ -28,15 +26,14 @@
 	let inputField: HTMLInputElement | null = $state(null);
 
 	const setBonusLetter = () => {
-		// hash the id
-		const hash = cyrb128(problem.id + $chosenWords.length);
-		const nonCenterLetters = problem.availableLetters.filter(
-			(letter) => letter !== problem.centerLetter
-		);
-		const index = hash[0] % nonCenterLetters.length;
-		bonusLetter = nonCenterLetters[index];
+		bonusLetter = nonCenterLetters[$chosenWords.length % nonCenterLetters.length];
 	};
+	const nonCenterLetters = problem.availableLetters.filter(
+		(letter) => letter !== problem.centerLetter
+	);
+	shuffleArray(nonCenterLetters, problem.id);
 
+	let top_matches: string[] | null = $state(null);
 	let currentWord = $state('');
 	let bonusLetter = $state('');
 	let showAlert = $state(false);
@@ -128,9 +125,9 @@
 			inputField.focus();
 		}
 	};
-	
+
 	const getWordFromMatch = (match: string) => {
-		return $chosenWords.filter((word) => word.word == match)[0]
+		return $chosenWords.filter((word) => word.word == match)[0];
 	};
 </script>
 
@@ -296,25 +293,23 @@
 					</div>
 				</div>
 				<div class="stat">
-					<div class="stat-title mb-2 text-lg font-semibold">
-						Meilleurs mots
-					</div>
+					<div class="stat-title mb-2 text-lg font-semibold">Meilleurs mots</div>
 					{#if top_matches}
-					<div class="text-justify text-neutral">
-						{#each top_matches as match (match)}
-						{#if $chosenWords.map((word) => word.word).includes(match)}
-						<span class="mr-2">
-							<WordBadge word={getWordFromMatch(match)} fixedSize={true}/>
-						</span>
-						{:else}
-							{match + " "}
-						{/if}
-						{/each}
-					</div>
+						<div class="text-neutral text-justify">
+							{#each top_matches as match (match)}
+								{#if $chosenWords.map((word) => word.word).includes(match)}
+									<span class="mr-2">
+										<WordBadge word={getWordFromMatch(match)} fixedSize={true} />
+									</span>
+								{:else}
+									{match + ' '}
+								{/if}
+							{/each}
+						</div>
 					{:else}
-					<div class="stat-value justify-self-center">
-						<span class="loading loading-dots loading-lg text-neutral"></span>
-					</div>
+						<div class="stat-value justify-self-center">
+							<span class="loading loading-dots loading-lg text-neutral"></span>
+						</div>
 					{/if}
 				</div>
 			{/if}
@@ -325,7 +320,7 @@
 					</div>
 					<div class="flex flex-col flex-wrap items-center gap-2">
 						{#each $chosenWords.toReversed() as word (word)}
-							<WordBadge {word} fixedSize={false}/>
+							<WordBadge {word} fixedSize={false} />
 						{/each}
 					</div>
 				</div>

@@ -20,3 +20,28 @@ export const cyrb128 = (str: string) => {
 	(h1 ^= h2 ^ h3 ^ h4), (h2 ^= h1), (h3 ^= h1), (h4 ^= h1);
 	return [h1 >>> 0, h2 >>> 0, h3 >>> 0, h4 >>> 0];
 };
+
+export const sfc32 = (a: number, b: number, c: number, d: number) => {
+	return () => {
+		a |= 0;
+		b |= 0;
+		c |= 0;
+		d |= 0;
+		const t = (((a + b) | 0) + d) | 0;
+		d = (d + 1) | 0;
+		a = b ^ (b >>> 9);
+		b = (c + (c << 3)) | 0;
+		c = (c << 21) | (c >>> 11);
+		c = (c + t) | 0;
+		return (t >>> 0) / 4294967296;
+	};
+};
+
+export const shuffleArray = (array: string[], seed: string) => {
+	const hash = cyrb128(seed);
+	const getRandomNumber = sfc32(hash[0], hash[1], hash[2], hash[3]);
+	for (let i = array.length - 1; i >= 0; i--) {
+		const j = Math.floor(getRandomNumber() * (i + 1));
+		[array[i], array[j]] = [array[j], array[i]];
+	}
+};

@@ -1,6 +1,6 @@
 import PocketBase from 'pocketbase';
 import type { WordsResponse, ProblemsResponse } from './generated/pocketBaseTypes';
-import { cyrb128 } from './hash';
+import { cyrb128, shuffleArray } from './hash';
 
 const API_URL =
 	process.env.NODE_ENV === 'production' ? 'https://eclosix.maoune.fr' : 'http://127.0.0.1:8090';
@@ -20,7 +20,7 @@ export const testWord = async (word: string) => {
 		skipTotal: true
 	});
 	if (words.items.length === 0) {
-		return "";
+		return '';
 	}
 	return words.items[0].raw;
 };
@@ -42,7 +42,7 @@ export const getProblemFromId = async (id: string): Promise<Problem> => {
 	if (!problem.letters) {
 		throw new Error('No available letters');
 	}
-	shuffleArray(problem.letters);
+	shuffleArray(problem.letters, problem.id);
 
 	return {
 		id,
@@ -63,7 +63,7 @@ export const getRandomProblem = async (): Promise<Problem> => {
 	if (!problem.letters) {
 		throw new Error('No available letters');
 	}
-	shuffleArray(problem.letters);
+	shuffleArray(problem.letters, problem.id);
 
 	return {
 		id: problem.id,
@@ -71,13 +71,6 @@ export const getRandomProblem = async (): Promise<Problem> => {
 		centerLetter: problem.center_letter,
 		maxPoints: problem.max_points
 	};
-};
-
-const shuffleArray = (array: string[]) => {
-	for (let i = array.length - 1; i >= 0; i--) {
-		const j = Math.floor(Math.random() * (i + 1));
-		[array[i], array[j]] = [array[j], array[i]];
-	}
 };
 
 export const getDailyProblem = async (): Promise<Problem> => {
@@ -103,7 +96,7 @@ export const getDailyProblem = async (): Promise<Problem> => {
 	if (!problem.letters) {
 		throw new Error('No available letters');
 	}
-	shuffleArray(problem.letters);
+	shuffleArray(problem.letters, problem.id);
 	return {
 		id: problem.id,
 		availableLetters: problem.letters,
@@ -114,11 +107,11 @@ export const getDailyProblem = async (): Promise<Problem> => {
 
 export const getTopMatches = async (problem: Problem): Promise<string[]> => {
 	const matches = await pb
-			.collection('problems')
-			.getOne<ProblemsResponse<string[], TexpandTopMatches>>(problem.id, {
-				expand: 'top_matches'
-			});
+		.collection('problems')
+		.getOne<ProblemsResponse<string[], TexpandTopMatches>>(problem.id, {
+			expand: 'top_matches'
+		});
 	return matches.expand?.top_matches.map((m) => m.raw) ?? [];
-		};
+};
 
 export default pb;
