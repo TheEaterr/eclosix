@@ -10,7 +10,7 @@
 	/>
 </svelte:head>
 
-<Header reset={undefined} />
+<Header reset={undefined} showHowToPlay={false} />
 
 <div class="w-full text-center">
 	<article class="prose bg-base-100 m-5 inline-block max-w-[120ch]">
