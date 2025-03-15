@@ -6,10 +6,6 @@ const API_URL =
 	process.env.NODE_ENV === 'production' ? 'https://eclosix.maoune.fr' : 'http://127.0.0.1:8090';
 const pb = new PocketBase(API_URL);
 
-type TexpandWord = {
-	word: WordsResponse;
-};
-
 type TexpandTopMatches = {
 	top_matches: WordsResponse[];
 };
@@ -35,9 +31,7 @@ export type Problem = {
 export const getProblemFromId = async (id: string): Promise<Problem> => {
 	const problem = await pb
 		.collection('problems')
-		.getOne<ProblemsResponse<string[], TexpandWord>>(id, {
-			expand: 'word'
-		});
+		.getOne<ProblemsResponse<string[]>>(id);
 
 	if (!problem.letters) {
 		throw new Error('No available letters');
@@ -54,9 +48,8 @@ export const getProblemFromId = async (id: string): Promise<Problem> => {
 export const getRandomProblem = async (): Promise<Problem> => {
 	const problem = await pb
 		.collection('problems')
-		.getFirstListItem<ProblemsResponse<string[], TexpandWord>>('', {
+		.getFirstListItem<ProblemsResponse<string[]>>('', {
 			sort: '@random',
-			expand: 'word'
 		});
 
 	if (!problem.letters) {
@@ -85,8 +78,7 @@ export const getDailyProblem = async (): Promise<Problem> => {
 	const problem = (
 		await pb
 			.collection('problems')
-			.getList<ProblemsResponse<string[], TexpandWord>>(randomProblemIndex, 1, {
-				expand: 'word',
+			.getList<ProblemsResponse<string[]>>(randomProblemIndex, 1, {
 				skipTotal: true
 			})
 	).items[0];
