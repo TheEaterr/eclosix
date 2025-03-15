@@ -25,13 +25,10 @@
 					rel="noopener"
 					class="link">blossom<IconExternalLink class="inline" size={15} /></a
 				>
-				crée par Merriam-Webster. Ce projet n'a aucune association ni connexion avec le jeu
-				original. Le site est entièrement open-source et disponible sur
-				<a
-					href="https://github.com/TheEaterr/taxonomicle"
-					target="_blank"
-					rel="noopener"
-					class="link">ce dépôt<IconExternalLink class="inline" size={15} /></a
+				crée par Merriam-Webster. Ce projet n'a aucune association ni connexion avec le jeu original.
+				Le site est entièrement open-source et disponible sur
+				<a href="https://github.com/TheEaterr/eclosix" target="_blank" rel="noopener" class="link"
+					>ce dépôt<IconExternalLink class="inline" size={15} /></a
 				>.
 			</p>
 			<h3>Création des données</h3>
@@ -42,14 +39,15 @@
 					target="_blank"
 					rel="noopener"
 					class="link">ce lien<IconExternalLink class="inline" size={15} /></a
-				>. 
+				>.
 			</p>
 			<p>
 				Pour générer les problèmes, la liste des mots français contenant exactement 7 lettres est
 				parcourue. Pour chacun d'entre-eux, si cet ensemble de lettres n'a pas été encore considéré,
 				alors tous les mots français de plus de 4 lettres qu'il est possible de créer avec ces
 				lettres sont générés. Enfin, une vérification pour chacune des lettres est fait pour
-				garantir que pour une lettre centrale donnée, il existe 12 mots différents contenant cette lettre.
+				garantir que pour une lettre centrale donnée, il existe 12 mots différents contenant cette
+				lettre.
 			</p>
 			<h3>Architecture du site</h3>
 			<p>
