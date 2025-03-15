@@ -42,11 +42,10 @@ export const getProblemFromId = async (id: string): Promise<Problem> => {
 	if (!problem.letters) {
 		throw new Error('No available letters');
 	}
-	shuffleArray(problem.letters, problem.id);
 
 	return {
 		id,
-		availableLetters: problem.letters,
+		availableLetters: shuffleArray(problem.letters, problem.id),
 		centerLetter: problem.center_letter,
 		maxPoints: problem.max_points
 	};
@@ -63,11 +62,10 @@ export const getRandomProblem = async (): Promise<Problem> => {
 	if (!problem.letters) {
 		throw new Error('No available letters');
 	}
-	shuffleArray(problem.letters, problem.id);
 
 	return {
 		id: problem.id,
-		availableLetters: problem.letters,
+		availableLetters: shuffleArray(problem.letters, problem.id),
 		centerLetter: problem.center_letter,
 		maxPoints: problem.max_points
 	};
@@ -96,10 +94,9 @@ export const getDailyProblem = async (): Promise<Problem> => {
 	if (!problem.letters) {
 		throw new Error('No available letters');
 	}
-	shuffleArray(problem.letters, problem.id);
 	return {
 		id: problem.id,
-		availableLetters: problem.letters,
+		availableLetters: shuffleArray(problem.letters, problem.id),
 		centerLetter: problem.center_letter,
 		maxPoints: problem.max_points
 	};

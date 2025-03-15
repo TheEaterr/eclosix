@@ -38,10 +38,12 @@ export const sfc32 = (a: number, b: number, c: number, d: number) => {
 };
 
 export const shuffleArray = (array: string[], seed: string) => {
+	const newArray = [...array];
 	const hash = cyrb128(seed);
 	const getRandomNumber = sfc32(hash[0], hash[1], hash[2], hash[3]);
-	for (let i = array.length - 1; i >= 0; i--) {
+	for (let i = newArray.length - 1; i >= 0; i--) {
 		const j = Math.floor(getRandomNumber() * (i + 1));
-		[array[i], array[j]] = [array[j], array[i]];
+		[newArray[i], newArray[j]] = [newArray[j], newArray[i]];
 	}
+	return newArray;
 };

@@ -26,12 +26,13 @@
 	let inputField: HTMLInputElement | null = $state(null);
 
 	const setBonusLetter = () => {
-		bonusLetter = nonCenterLetters[$chosenWords.length % nonCenterLetters.length];
+		bonusLetter = bonusLetters[$chosenWords.length % bonusLetters.length];
 	};
-	const nonCenterLetters = problem.availableLetters.filter(
-		(letter) => letter !== problem.centerLetter
-	);
-	shuffleArray(nonCenterLetters, problem.id);
+	const sideLetters = $derived(problem.availableLetters.filter((letter) => letter !== problem.centerLetter));
+	const bonusLetters = $derived(shuffleArray([...sideLetters], problem.id))
+	$effect(() => {
+		setBonusLetter();
+	});
 
 	let top_matches: string[] | null = $state(null);
 	let currentWord = $state('');
@@ -41,9 +42,7 @@
 	let showShared = $state(false);
 	let gameWonMessage = $state('');
 	let gameWonClass = $state('');
-	setBonusLetter();
 
-	const sideLetters = problem.availableLetters.filter((letter) => letter !== problem.centerLetter);
 
 	const onLetterButtonClick = (letter: string) => {
 		showAlert = false;
