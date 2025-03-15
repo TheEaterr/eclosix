@@ -33,7 +33,7 @@
 	};
 
 	const getTierFontSize = (tier: string) => {
-		if (fixedSize) return 'text-lg';
+		if (fixedSize) return 'text-md';
 		switch (tier) {
 			case 'bronze':
 				return 'text-xl';
@@ -82,7 +82,7 @@
 	style="background-color: {getTierColor(tier)}"
 >
 	{word.raw}
-	<div class="ml-4">{word.points}</div>
+	<div class="{fixedSize ? "ml-0" : "ml-4"}">{word.points}</div>
 	{#if tier === 'bronze'}
 		<IconLaurelWreath3 />
 	{:else if tier === 'silver'}
