@@ -18,4 +18,4 @@
 	<meta name="description" content="Trouver les mots les plus longs possibles avec 7 lettres." />
 </svelte:head>
 
-<GamePage isDaily={false} problem={data} reset={fixedReset} />
+<GamePage gameType="custom" problem={data} reset={fixedReset} />
