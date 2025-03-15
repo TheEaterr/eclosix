@@ -299,15 +299,13 @@
 					{#if top_matches}
 						<div class="text-neutral flex flex-wrap justify-evenly gap-1 text-sm">
 							{#each top_matches as match (match)}
+								<span class="{(new Set(match)).size === 7 ? 'font-bold' : ''}">
 								{#if $chosenWords.map((word) => word.raw).includes(match)}
-									<span>
-										<WordBadge word={getWordFromMatch(match)} fixedSize={true} />
-									</span>
+									<WordBadge word={getWordFromMatch(match)} fixedSize={true} />
 								{:else}
-									<span>
-										{match}
-									</span>
+									{match}
 								{/if}
+								</span>
 							{/each}
 						</div>
 					{:else}
