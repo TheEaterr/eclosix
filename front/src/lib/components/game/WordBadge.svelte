@@ -82,7 +82,7 @@
 	style="background-color: {getTierColor(tier)}"
 >
 	{word.raw}
-	<div class="{fixedSize ? "ml-0" : "ml-4"}">{word.points}</div>
+	<div class={fixedSize ? 'ml-0' : 'ml-4'}>{word.points}</div>
 	{#if tier === 'bronze'}
 		<IconLaurelWreath3 />
 	{:else if tier === 'silver'}

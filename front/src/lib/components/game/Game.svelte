@@ -28,8 +28,10 @@
 	const setBonusLetter = () => {
 		bonusLetter = bonusLetters[$chosenWords.length % bonusLetters.length];
 	};
-	const sideLetters = $derived(problem.availableLetters.filter((letter) => letter !== problem.centerLetter));
-	const bonusLetters = $derived(shuffleArray([...sideLetters], problem.id))
+	const sideLetters = $derived(
+		problem.availableLetters.filter((letter) => letter !== problem.centerLetter)
+	);
+	const bonusLetters = $derived(shuffleArray([...sideLetters], problem.id));
 	$effect(() => {
 		setBonusLetter();
 	});
@@ -42,7 +44,6 @@
 	let showShared = $state(false);
 	let gameWonMessage = $state('');
 	let gameWonClass = $state('');
-
 
 	const onLetterButtonClick = (letter: string) => {
 		showAlert = false;
@@ -294,7 +295,7 @@
 				<div class="stat">
 					<div class="stat-title mb-2 text-lg font-semibold">Meilleurs mots</div>
 					{#if top_matches}
-						<div class="text-neutral flex flex-wrap gap-1 justify-evenly text-sm">
+						<div class="text-neutral flex flex-wrap justify-evenly gap-1 text-sm">
 							{#each top_matches as match (match)}
 								{#if $chosenWords.map((word) => word.word).includes(match)}
 									<span>
@@ -304,7 +305,7 @@
 									<span>
 										{match}
 									</span>
-									{/if}
+								{/if}
 							{/each}
 						</div>
 					{:else}
