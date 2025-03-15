@@ -36,6 +36,7 @@
 				le mot. Enfin, 7 points supplémentaires sont accordés si le mot utilise toutes les lettres.
 			</p>
 			<p class="mb-2 py-2">Il existe au moins un mot utilisant toutes les lettres par problème.</p>
+			<p class="mb-2 py-2">Un nouveau puzzle est généré chaque jour.</p>
 			<hr class="bg-neutral h-[1px] rounded" />
 			<div class="modal-action">
 				<a

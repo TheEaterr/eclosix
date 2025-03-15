@@ -18,7 +18,7 @@
 </script>
 
 {#if problem}
-	<Header {reset} showHowToPlay={true}/>
+	<Header {reset} showHowToPlay={true} />
 	<Game {problem} {isDaily} />
 {:else}
 	<div class="flex h-screen w-screen items-center justify-center">
