@@ -47,7 +47,7 @@
 	};
 
 	const getTierFontWeight = (tier: string) => {
-		if (fixedSize) return 'font-normal';
+		if (fixedSize) return '';
 		switch (tier) {
 			case 'bronze':
 				return 'font-bold';

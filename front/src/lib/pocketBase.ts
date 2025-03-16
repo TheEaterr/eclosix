@@ -88,13 +88,17 @@ export const getDailyProblem = async (): Promise<Problem> => {
 	};
 };
 
-export const getTopMatches = async (problem: Problem): Promise<string[]> => {
+export const getTopMatches = async (problem: Problem): Promise<WordsResponse[]> => {
 	const matches = await pb
 		.collection('problems')
 		.getOne<ProblemsResponse<string[], TexpandTopMatches>>(problem.id, {
 			expand: 'top_matches'
 		});
-	return matches.expand?.top_matches.map((m) => m.raw) ?? [];
+
+	if (!matches.expand?.top_matches) {
+		throw new Error('No top matches');
+	}
+	return matches.expand?.top_matches;
 };
 
 export default pb;

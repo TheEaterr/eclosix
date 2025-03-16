@@ -175,10 +175,10 @@ func parseList() {
 			maxPoints := 0
 			for len(topMatches) < 50 && j < len(matches) {
 				if strings.Contains(matches[j].Word, centerLetter) {
-					topMatches = append(topMatches, matches[j].Word)
 					if len(topMatches) < 12 {
 						maxPoints += matches[j].Points
 					}
+					topMatches = append(topMatches, matches[j].Word)
 				}
 				j++
 			}

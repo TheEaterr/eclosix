@@ -15,6 +15,7 @@
 	import { goto } from '$app/navigation';
 	import type { ChosenWord } from '$lib/gameContext';
 	import { shuffleArray } from '$lib/hash';
+	import type { WordsResponse } from '$lib/generated/pocketBaseTypes';
 
 	export type GameTypes = 'daily' | 'endless' | 'custom';
 
@@ -39,7 +40,7 @@
 		setBonusLetter();
 	});
 
-	let top_matches: string[] | null = $state(null);
+	let top_matches: WordsResponse[] | null = $state(null);
 	let currentWord = $state('');
 	let bonusLetter = $state('');
 	let showAlert = $state(false);
@@ -309,11 +310,11 @@
 					{#if top_matches}
 						<div class="text-neutral flex flex-wrap justify-evenly gap-1 text-sm">
 							{#each top_matches as match (match)}
-								<span class={new Set(match).size === 7 ? 'font-bold' : ''}>
-									{#if $chosenWords.map((word) => word.raw).includes(match)}
-										<WordBadge word={getWordFromMatch(match)} fixedSize={true} />
+								<span class={new Set(match.word).size === 7 ? 'font-bold' : ''}>
+									{#if $chosenWords.map((word) => word.raw).includes(match.raw)}
+										<WordBadge word={getWordFromMatch(match.raw)} fixedSize={true} />
 									{:else}
-										{match}
+										{match.raw}
 									{/if}
 								</span>
 							{/each}
