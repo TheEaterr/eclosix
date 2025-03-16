@@ -18,7 +18,8 @@
 
 	export type GameTypes = 'daily' | 'endless' | 'custom';
 
-	let { problem, gameType, reset }: { problem: Problem; gameType: GameTypes; reset: () => void } = $props();
+	let { problem, gameType, reset }: { problem: Problem; gameType: GameTypes; reset: () => void } =
+		$props();
 
 	const chosenWords = getContext<Writable<ChosenWord[]>>('chosenWords');
 	const points = getContext<Writable<number>>('points');
@@ -110,11 +111,11 @@
 	const shareToClipboard = async () => {
 		if (gameType === 'daily') {
 			await navigator.clipboard.writeText(
-				`J'ai réussi à atteindre un score de ${$points}🏆 sur Éclosix 🌸 !\nEssaie de me battre sur https://eclosix.maoune.fr/game/daily 🎯 avant qu'il expire ⏰ !`
+				`J'ai réussi à atteindre un score de ${$points}🏆 sur Éclosix 🌸 !\nEssaie de me battre sur https://eclosix.fr/game/daily 🎯 avant qu'il expire ⏰ !`
 			);
 		} else {
 			await navigator.clipboard.writeText(
-				`J'ai réussi à atteindre un score de ${$points}🏆 sur Éclosix 🌸 !\nEssaie de me battre sur https://eclosix.maoune.fr/game/custom/${problem.id} 🎯 !`
+				`J'ai réussi à atteindre un score de ${$points}🏆 sur Éclosix 🌸 !\nEssaie de me battre sur https://eclosix.fr/game/custom/${problem.id} 🎯 !`
 			);
 		}
 		showShared = true;
@@ -281,7 +282,10 @@
 						>
 					</div>
 					{#if showShared}
-						<div class="goal-stat-desc stat-desc justify-self-center mt-1" id="description-tooltip-share">
+						<div
+							class="goal-stat-desc stat-desc mt-1 justify-self-center"
+							id="description-tooltip-share"
+						>
 							Copié dans le presse-papier.
 						</div>
 					{/if}
@@ -289,7 +293,13 @@
 				<div class="stat">
 					<div class="stat-value justify-self-center">
 						<button
-							onclick={() => { if (gameType === 'endless') { reset(); } else { goto('/game/endless'); } }}
+							onclick={() => {
+								if (gameType === 'endless') {
+									reset();
+								} else {
+									goto('/game/endless');
+								}
+							}}
 							class="btn-primary-special btn m-auto mb-0 w-fit text-lg">Rejouer</button
 						>
 					</div>
@@ -299,12 +309,12 @@
 					{#if top_matches}
 						<div class="text-neutral flex flex-wrap justify-evenly gap-1 text-sm">
 							{#each top_matches as match (match)}
-								<span class="{(new Set(match)).size === 7 ? 'font-bold' : ''}">
-								{#if $chosenWords.map((word) => word.raw).includes(match)}
-									<WordBadge word={getWordFromMatch(match)} fixedSize={true} />
-								{:else}
-									{match}
-								{/if}
+								<span class={new Set(match).size === 7 ? 'font-bold' : ''}>
+									{#if $chosenWords.map((word) => word.raw).includes(match)}
+										<WordBadge word={getWordFromMatch(match)} fixedSize={true} />
+									{:else}
+										{match}
+									{/if}
 								</span>
 							{/each}
 						</div>

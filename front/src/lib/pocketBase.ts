@@ -3,7 +3,7 @@ import type { WordsResponse, ProblemsResponse } from './generated/pocketBaseType
 import { cyrb128, shuffleArray } from './hash';
 
 const API_URL =
-	process.env.NODE_ENV === 'production' ? 'https://eclosix.maoune.fr' : 'http://127.0.0.1:8090';
+	process.env.NODE_ENV === 'production' ? 'https://eclosix.fr' : 'http://127.0.0.1:8090';
 const pb = new PocketBase(API_URL);
 
 type TexpandTopMatches = {
@@ -29,9 +29,7 @@ export type Problem = {
 };
 
 export const getProblemFromId = async (id: string): Promise<Problem> => {
-	const problem = await pb
-		.collection('problems')
-		.getOne<ProblemsResponse<string[]>>(id);
+	const problem = await pb.collection('problems').getOne<ProblemsResponse<string[]>>(id);
 
 	if (!problem.letters) {
 		throw new Error('No available letters');
@@ -46,11 +44,9 @@ export const getProblemFromId = async (id: string): Promise<Problem> => {
 };
 
 export const getRandomProblem = async (): Promise<Problem> => {
-	const problem = await pb
-		.collection('problems')
-		.getFirstListItem<ProblemsResponse<string[]>>('', {
-			sort: '@random',
-		});
+	const problem = await pb.collection('problems').getFirstListItem<ProblemsResponse<string[]>>('', {
+		sort: '@random'
+	});
 
 	if (!problem.letters) {
 		throw new Error('No available letters');
@@ -76,11 +72,9 @@ export const getDailyProblem = async (): Promise<Problem> => {
 	const problemsCount = (await pb.collection('problems').getList()).totalItems;
 	const randomProblemIndex = Math.floor(hash[0] % problemsCount);
 	const problem = (
-		await pb
-			.collection('problems')
-			.getList<ProblemsResponse<string[]>>(randomProblemIndex, 1, {
-				skipTotal: true
-			})
+		await pb.collection('problems').getList<ProblemsResponse<string[]>>(randomProblemIndex, 1, {
+			skipTotal: true
+		})
 	).items[0];
 
 	if (!problem.letters) {
