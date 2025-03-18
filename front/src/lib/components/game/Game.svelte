@@ -93,13 +93,13 @@
 	$effect(() => {
 		if ($chosenWords.length == 12) {
 			gameWon.set(true);
-			if ($points / problem.maxPoints >= 0.9) {
+			if ($points / problem.maxPoints >= 0.9 || $points >= 350) {
 				gameWonMessage = `CLASSE EXCEPTIONNELLE`;
 				gameWonClass = 'gold';
-			} else if ($points / problem.maxPoints >= 0.8) {
+			} else if ($points / problem.maxPoints >= 0.8 || $points >= 300) {
 				gameWonMessage = `PREMIÈRE CLASSE`;
 				gameWonClass = 'silver';
-			} else if ($points / problem.maxPoints >= 0.7) {
+			} else if ($points / problem.maxPoints >= 0.7 || $points >= 250) {
 				gameWonMessage = `DEUXIÈME CLASSE`;
 				gameWonClass = 'bronze';
 			}
