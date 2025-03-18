@@ -252,7 +252,11 @@
 					<IconTrophy size={30} />
 				</div>
 				<div class="stat-title mb-2 text-lg font-semibold">Points</div>
-				<div class="small-title stat-value text-primary">
+				<div
+					class="small-title stat-value {problem.maxPoints === $points
+						? 'rainbow-text'
+						: 'text-primary'} text-wrap"
+				>
 					{#if $gameWon}
 						{$points} / {problem.maxPoints} ({Math.round(($points / problem.maxPoints) * 100)}%)
 					{:else}
@@ -345,4 +349,51 @@
 <svelte:window on:keydown={onKeyDown} />
 
 <style>
+	/* We repeat the gradient three times so we can use background size as percentage for the animation */
+	.rainbow-text {
+		background-image: repeating-linear-gradient(
+			45deg,
+			indigo,
+			blue,
+			green,
+			yellow,
+			orange,
+			red,
+			violet,
+			indigo,
+			blue,
+			green,
+			yellow,
+			orange,
+			red,
+			violet,
+			indigo,
+			blue,
+			green,
+			yellow,
+			orange,
+			red,
+			violet,
+			indigo,
+			blue
+		);
+		background-size: 200% 200%;
+		background-clip: text;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		animation: rainbow 6s ease infinite;
+		animation-timing-function: linear;
+	}
+
+	@keyframes rainbow {
+		0% {
+			background-position: 0% 50%;
+		}
+		50% {
+			background-position: 100% 25%;
+		}
+		100% {
+			background-position: 200% 50%;
+		}
+	}
 </style>
