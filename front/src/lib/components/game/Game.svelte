@@ -112,11 +112,11 @@
 	const shareToClipboard = async () => {
 		if (gameType === 'daily') {
 			await navigator.clipboard.writeText(
-				`J'ai réussi à atteindre un score de ${$points}🏆 sur Éclosix 🌸 !\nEssaie de me battre sur https://eclosix.fr/game/daily 🎯 avant qu'il expire ⏰ !`
+				`J'ai réussi à atteindre un score de ${$points}🏆 (${Math.round(($points / problem.maxPoints) * 100)}%) sur Éclosix 🌸 !\nEssaie de me battre sur https://eclosix.fr/game/daily 🎯 avant qu'il expire ⏰ !`
 			);
 		} else {
 			await navigator.clipboard.writeText(
-				`J'ai réussi à atteindre un score de ${$points}🏆 sur Éclosix 🌸 !\nEssaie de me battre sur https://eclosix.fr/game/custom/${problem.id} 🎯 !`
+				`J'ai réussi à atteindre un score de ${$points}🏆 (${Math.round(($points / problem.maxPoints) * 100)}%) sur Éclosix 🌸 !\nEssaie de me battre sur https://eclosix.fr/game/custom/${problem.id} 🎯 !`
 			);
 		}
 		showShared = true;
