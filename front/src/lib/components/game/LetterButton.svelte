@@ -25,7 +25,7 @@
 	onclick={() => onClick(letter)}
 >
 	<div class="absolute top-0 left-0 z-1 flex h-full w-full items-center justify-center text-5xl">
-		{letter}
+		{letter.toUpperCase()}
 	</div>
 	<div class="absolute top-0 left-0 h-full w-full">
 		<svg
