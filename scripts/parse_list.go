@@ -69,12 +69,19 @@ func parseList() {
 
 	candidates := make([]int, 0)
 	registered_candidates := make(map[int]struct{})
+	added_words := make(map[string]struct{})
 	for _, word := range frenchWords {
 		wordStr := strings.ToLower(word)
 		uniqueWords[wordStr] = struct{}{}
 		preprocessedWord := preprocessWord(wordStr)
 		if preprocessedWord != "" {
 			mutex.Lock()
+			_, exists := added_words[preprocessedWord]
+			if exists {
+				mutex.Unlock()
+				continue
+			}
+			added_words[preprocessedWord] = struct{}{}
 			wordsList = append(wordsList, Word{Raw: word, Preprocessed: preprocessedWord})
 			i := len(wordsList) - 1
 			mutex.Unlock()
