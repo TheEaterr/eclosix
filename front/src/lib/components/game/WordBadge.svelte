@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { ChosenWord } from '$lib/gameContext';
-	import { IconLaurelWreath1, IconLaurelWreath2, IconLaurelWreath3 } from '@tabler/icons-svelte';
+	import { IconHexagons, IconLaurelWreath1, IconLaurelWreath2, IconLaurelWreath3 } from '@tabler/icons-svelte';
 
 	let { word, fixedSize }: { word: ChosenWord; fixedSize: boolean } = $props();
 
@@ -89,6 +89,9 @@
 		<IconLaurelWreath2 />
 	{:else if tier === 'gold'}
 		<IconLaurelWreath1 />
+	{/if}
+	{#if new Set(word.word).size === 7}
+		<IconHexagons />
 	{/if}
 </div>
 
