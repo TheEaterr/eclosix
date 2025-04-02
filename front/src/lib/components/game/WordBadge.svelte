@@ -1,6 +1,11 @@
 <script lang="ts">
 	import type { ChosenWord } from '$lib/gameContext';
-	import { IconHexagons, IconLaurelWreath1, IconLaurelWreath2, IconLaurelWreath3 } from '@tabler/icons-svelte';
+	import {
+		IconHexagons,
+		IconLaurelWreath1,
+		IconLaurelWreath2,
+		IconLaurelWreath3
+	} from '@tabler/icons-svelte';
 
 	let { word, fixedSize }: { word: ChosenWord; fixedSize: boolean } = $props();
 

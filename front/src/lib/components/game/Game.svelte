@@ -191,9 +191,14 @@
 				>
 					<IconTrash size={30} />
 				</button>
-				<button class="btn btn-primary-special btn-xl" onclick={() => submitWord()}
-					>Soumettre</button
-				>
+				<button class="btn btn-primary-special btn-xl pl-5d" onclick={() => submitWord()}
+					>Soumettre
+					{#if currentWord.length > 3}
+						<div class="flex h-full flex-row items-center text-xl font-bold">
+							({getNumberOfPoints(currentWord.toLowerCase(), problem, bonusLetter)})
+						</div>
+					{/if}
+				</button>
 			</div>
 			<div class="flex flex-row">
 				<div class="mt-12.5 flex flex-col gap-1">
