@@ -196,7 +196,7 @@
 				>
 			</div>
 			<div class="flex flex-row">
-				<div class="mt-10 flex flex-col">
+				<div class="mt-12.5 flex flex-col gap-1">
 					<LetterButton
 						letter={sideLetters[0]}
 						onClick={onLetterButtonClick}
@@ -210,7 +210,7 @@
 						{bonusLetter}
 					/>
 				</div>
-				<div class="mr-[-0.625rem] ml-[-0.625rem] flex flex-col">
+				<div class="mr-[-0.5rem] ml-[-0.5rem] flex flex-col gap-1">
 					<LetterButton
 						letter={sideLetters[2]}
 						onClick={onLetterButtonClick}
@@ -230,7 +230,7 @@
 						{bonusLetter}
 					/>
 				</div>
-				<div class="mt-10 flex flex-col">
+				<div class="mt-12.5 flex flex-col gap-1">
 					<LetterButton
 						letter={sideLetters[4]}
 						onClick={onLetterButtonClick}

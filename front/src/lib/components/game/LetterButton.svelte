@@ -20,7 +20,7 @@
 </script>
 
 <button
-	class="link text-neutral {classes[color]} relative h-20 w-20 font-bold"
+	class="link text-neutral {classes[color]} relative h-25 w-25 font-bold"
 	type="button"
 	onclick={() => onClick(letter)}
 >
@@ -46,7 +46,7 @@
 			</path>
 		</svg>
 	</div>
-	<div class="absolute top-[-8px] left-[-8px] h-full w-full">
+	<div class="absolute top-[-10px] left-[-10px] h-full w-full">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			height="120%"
