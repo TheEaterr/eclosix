@@ -20,18 +20,18 @@
 </script>
 
 <button
-	class="link text-neutral {classes[color]} relative h-25 w-25 font-bold"
+	class="link text-neutral {classes[color]} relative h-22 w-22 m-1.5 font-bold"
 	type="button"
 	onclick={() => onClick(letter)}
 >
 	<div class="absolute top-0 left-0 z-1 flex h-full w-full items-center justify-center text-5xl">
 		{letter.toUpperCase()}
 	</div>
-	<div class="absolute top-0 left-0 h-full w-full">
+	<div class="absolute top-[-6.6px] left-[-6.6px] h-full w-full -z-10" >
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			height="100%"
-			width="100%"
+			height="115%"
+			width="115%"
 			viewBox="-15.51 -52.47 61.01 52.97"
 			vector-effect="non-scaling-stroke"
 		>
@@ -46,11 +46,11 @@
 			</path>
 		</svg>
 	</div>
-	<div class="absolute top-[-10px] left-[-10px] h-full w-full">
+	<div class="absolute top-[-13.2px] left-[-13.2px] h-full w-full -z-10">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			height="120%"
-			width="120%"
+			height="150%"
+			width="150%"
 			viewBox="-15.51 -52.47 61.01 52.97"
 			vector-effect="non-scaling-stroke"
 		>
