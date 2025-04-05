@@ -32,8 +32,11 @@
 			<p class="mb-2 py-2">
 				Un mot de 4 lettres vaut 2 points, un mot de 5 lettres vaut 4 points, un mot de 6 lettres
 				vaut 6 points et un mot de 7 lettres vaut 12 points. Chaque lettre supplémentaire rapporte 3
-				points de plus. La lettre en bleu rapporte 5 points supplémentaire si elle est utilisée dans
-				le mot. Enfin, 7 points supplémentaires sont accordés si le mot utilise toutes les lettres.
+				points de plus. La lettre en bleu est la lettre bonus et rapporte 5 points supplémentaire si
+				elle est utilisée dans le mot. La première lettre bonus est celle du pétal supérieur et les
+				suivantes sont choisies en tournant dans le sens des aiguilles d'une montre autour de la
+				lettre central. Enfin, 7 points supplémentaires sont accordés si le mot utilise toutes les
+				lettres.
 			</p>
 			<p class="mb-2 py-2">Il existe au moins un mot utilisant toutes les lettres par problème.</p>
 			<p class="mb-2 py-2">Un nouveau puzzle est généré chaque jour.</p>

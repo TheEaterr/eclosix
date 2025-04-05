@@ -14,7 +14,6 @@
 	import WordBadge from './WordBadge.svelte';
 	import { goto } from '$app/navigation';
 	import type { ChosenWord } from '$lib/gameContext';
-	import { shuffleArray } from '$lib/hash';
 	import type { WordsResponse } from '$lib/generated/pocketBaseTypes';
 
 	export type GameTypes = 'daily' | 'endless' | 'custom';
@@ -30,12 +29,12 @@
 	let inputField: HTMLInputElement | null = $state(null);
 
 	const setBonusLetter = () => {
-		bonusLetter = bonusLetters[$chosenWords.length % bonusLetters.length];
+		bonusLetter = sideLetters[bonusLetters[$chosenWords.length % bonusLetters.length]];
 	};
 	const sideLetters = $derived(
 		problem.availableLetters.filter((letter) => letter !== problem.centerLetter)
 	);
-	const bonusLetters = $derived(shuffleArray([...sideLetters], problem.id));
+	const bonusLetters = [2, 4, 5, 3, 1, 0];
 	$effect(() => {
 		setBonusLetter();
 	});
