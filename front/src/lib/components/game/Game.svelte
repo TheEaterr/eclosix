@@ -111,11 +111,11 @@
 	const shareToClipboard = async () => {
 		if (gameType === 'daily') {
 			await navigator.clipboard.writeText(
-				`J'ai réussi à atteindre un score de ${$points}🏆 (${Math.round(($points / problem.maxPoints) * 100)}%) sur Éclosix 🌸 !\nEssaie de me battre sur https://eclosix.fr/game/daily 🎯 avant qu'il expire ⏰ !`
+				`J'ai réussi à atteindre un score de ${$points}🏆 (${Math.floor(($points / problem.maxPoints) * 100)}%) sur Éclosix 🌸 !\nEssaie de me battre sur https://eclosix.fr/game/daily 🎯 avant qu'il expire ⏰ !`
 			);
 		} else {
 			await navigator.clipboard.writeText(
-				`J'ai réussi à atteindre un score de ${$points}🏆 (${Math.round(($points / problem.maxPoints) * 100)}%) sur Éclosix 🌸 !\nEssaie de me battre sur https://eclosix.fr/game/custom/${problem.id} 🎯 !`
+				`J'ai réussi à atteindre un score de ${$points}🏆 (${Math.floor(($points / problem.maxPoints) * 100)}%) sur Éclosix 🌸 !\nEssaie de me battre sur https://eclosix.fr/game/custom/${problem.id} 🎯 !`
 			);
 		}
 		showShared = true;
@@ -261,10 +261,13 @@
 						? 'rainbow-text'
 						: 'text-primary'} text-wrap"
 				>
-					{#if $gameWon}
-						{$points} / {problem.maxPoints} ({Math.round(($points / problem.maxPoints) * 100)}%)
-					{:else}
-						{$points}
+					{$points} / {problem.maxPoints} ({Math.floor(($points / problem.maxPoints) * 100)}%)
+					{#if problem.maxPoints === $points}
+						<h3
+							class="small-title text-center text-3xl font-bold text-wrap"
+						>
+							SCORE MAXIMAL
+						</h3>
 					{/if}
 				</div>
 			</div>
