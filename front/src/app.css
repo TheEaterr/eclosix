@@ -114,3 +114,7 @@ hr {
 	border: none;
 	height: 1px;
 }
+
+* {
+   touch-action: manipulation;
+}
