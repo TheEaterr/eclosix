@@ -263,11 +263,7 @@
 				>
 					{$points} / {problem.maxPoints} ({Math.floor(($points / problem.maxPoints) * 100)}%)
 					{#if problem.maxPoints === $points}
-						<h3
-							class="small-title text-center text-3xl font-bold text-wrap"
-						>
-							SCORE MAXIMAL
-						</h3>
+						<h3 class="small-title text-center text-3xl font-bold text-wrap">SCORE MAXIMAL</h3>
 					{/if}
 				</div>
 			</div>
